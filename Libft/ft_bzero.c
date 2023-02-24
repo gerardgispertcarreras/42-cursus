@@ -6,9 +6,14 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:01:30 by ggispert          #+#    #+#             */
-/*   Updated: 2023/01/24 18:40:01 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/21 19:06:43 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+	This function recieves a pointer s and a size_t n. It fills the n first bytes
+	of s with 0's.
+*/
 
 #include "libft.h"
 

@@ -6,9 +6,15 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:53:10 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/01 18:13:08 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/21 19:06:34 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+	This function recieves a pointer dst, a pointer src and a size_t n. It copies
+	the first n bytes of src on the first n bytes of dst in the same order. It 
+	returns a pointer to the first byte of dst. It can be used when overlapping.
+*/
 
 #include "libft.h"
 

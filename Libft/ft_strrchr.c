@@ -6,9 +6,14 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:42:53 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/01 20:58:26 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/21 19:38:56 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+	This function recieves a pointer s and an integer c. It returns  a pointer
+	to the last ocurrence of (char)c.
+*/
 
 #include "libft.h"
 
