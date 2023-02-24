@@ -6,16 +6,9 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:08:00 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/21 19:06:35 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/24 13:21:26 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-	This function recieves a pointer dst, a pointer src and a size_t n. It copies
-	the first n bytes of src on the first n bytes of dst in the same order. It 
-	returns a pointer to the first byte of dst. For pointers that overlap it
-	should be used ft_memmove.
-*/
 
 #include "libft.h"
 

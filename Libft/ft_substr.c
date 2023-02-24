@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 13:35:48 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/21 19:06:30 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:39:00 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*a;
-	char			*b;
-	unsigned int	size;
+	size_t	n;
+	char *a;
 
-	if (s == NULL)
-		return (NULL);
-	size = ft_strlen(s);
-	if (start > size)
+	n = ft_strlen(s);
+	if (n == 0)
+		return (ft_strdup(s));
+	if (start > n)
 		len = 0;
-	else if (size - start < len)
-		len = size - start;
-	a = (char *)s + start;
-	b = malloc((len + 1) * sizeof(char));
-	if (b == NULL)
+	else if (n - start < len)
+		len = n - start;
+	a = malloc ((len + 1) * sizeof(char));
+	if (!a)
 		return (NULL);
-	ft_strlcpy(b, a, len + 1);
-	return (b);
+	if (len == 0)
+		return (ft_memset(a, '\0', 1));
+	ft_strlcpy(a, s + start, len + 1);
+	return (a);
 }
