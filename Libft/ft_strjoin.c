@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 19:56:09 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/09 16:18:58 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/25 16:29:58 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	len1;
 	size_t	len2;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	if (s1)
+		len1 = ft_strlen(s1);
+	else
+		len1 = 0;
+	if (s2)
+		len2 = ft_strlen(s2);
+	else
+		len2 = 0;
 	p = malloc((len1 + len2 + 1) * sizeof(char));
 	if (p == NULL)
 		return (NULL);
-	ft_strlcpy(p, s1, len1 + 1);
-	ft_strlcat(p, s2, len1 + len2 + 1);
+	ft_memmove(p, s1, len1);
+	ft_strlcpy(p + len1, s2, len2 + 1);
 	return (p);
 }

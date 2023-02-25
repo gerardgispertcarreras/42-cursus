@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 13:35:48 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/24 14:39:00 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:55:40 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	n;
-	char *a;
+	char	*a;
 
 	n = ft_strlen(s);
-	if (n == 0)
-		return (ft_strdup(s));
-	if (start > n)
+	if (start > n - 1 || n == 0)
 		len = 0;
 	else if (n - start < len)
 		len = n - start;
@@ -28,7 +26,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!a)
 		return (NULL);
 	if (len == 0)
-		return (ft_memset(a, '\0', 1));
-	ft_strlcpy(a, s + start, len + 1);
+		ft_bzero(a, 1);
+	else
+		ft_strlcpy(a, s + start, len + 1);
 	return (a);
 }
