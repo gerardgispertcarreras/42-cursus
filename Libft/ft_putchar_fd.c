@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 20:46:48 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/09 20:49:03 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:23:54 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, c, sizeof(char));
+	write(fd, &c, sizeof(char));
 }

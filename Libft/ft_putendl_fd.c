@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 21:00:06 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/09 21:01:23 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:23:51 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	ft_putstr_fd(s, fd)
+	ft_putstr_fd(s, fd);
 	ft_putchar_fd('\n', fd);
 }

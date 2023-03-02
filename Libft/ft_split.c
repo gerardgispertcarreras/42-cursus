@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:41:26 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/25 18:38:51 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:12:05 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ size_t	get_word_count(char const *s, char c)
 	return (i);
 }
 
-size_t	get_word_length(char const *s, char c)
+long	get_word_length(char const *s, char c)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
 	while (s[i] != c && s[i] != '\0')
@@ -42,10 +42,20 @@ size_t	get_word_length(char const *s, char c)
 	return (i);
 }
 
+char	**check_split(char a, long i, char **p)
+{
+	if (!a)
+		return (p);
+	while (i >= 0)
+		free(p[i--]);
+	free(p);
+	return (NULL);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	size_t	t;
-	size_t	i;
+	long	t;
+	long	i;
 	size_t	j;
 	size_t	len;
 	char	**p;
@@ -63,8 +73,10 @@ char	**ft_split(char const *s, char c)
 		len = get_word_length(&s[j], c);
 		if (len > 0)
 			p[i++] = ft_substr(s, j, len);
+		if (i > 0 && p[i - 1] == NULL)
+			t = -1;
 		j += len + 1;
 	}
 	p[i] = NULL;
-	return (p);
+	return (check_split(t == -1, i, p));
 }

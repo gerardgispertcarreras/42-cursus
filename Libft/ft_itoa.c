@@ -6,17 +6,17 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:30:02 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/25 19:22:07 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/02/26 14:53:21 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		get_digits(int n)
+int	get_digits(int n)
 {
 	if (n / 10 == 0)
-		return 1;
-	return (get_digits(n/10) + 1);
+		return (1);
+	return (get_digits(n / 10) + 1);
 }
 
 char	*ft_itoa(int n)

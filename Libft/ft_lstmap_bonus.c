@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/09 21:02:17 by ggispert          #+#    #+#             */
-/*   Updated: 2023/02/26 15:24:21 by ggispert         ###   ########.fr       */
+/*   Created: 2023/02/17 14:12:14 by ggispert          #+#    #+#             */
+/*   Updated: 2023/03/02 16:40:03 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (n < 0)
+	t_list	*l;
+	void	*cont;
+
+	if (lst != NULL)
 	{
-		ft_putchar_fd('-', fd);
-		if (n < -9)
-			ft_putnbr_fd((n / 10) * -1, fd);
-		ft_putchar_fd((n % 10) * -1 + '0', fd);
-	}
-	else
-	{
-		if (n > 9)
+		cont = (*f)(lst->content);
+		if (cont == NULL)
+			return (NULL);
+		l = ft_lstnew(cont);
+		if (l == NULL)
 		{
-			ft_putnbr_fd(n / 10, fd);
+			free(cont);
+			return (NULL);
 		}
-		ft_putchar_fd(n % 10 + '0', fd);
+		l->next = ft_lstmap(lst->next, f, del);
+		if (l->next == NULL && lst->next != NULL)
+		{
+			ft_lstdelone(l, del);
+			l = NULL;
+		}
+		return (l);
 	}
+	return (NULL);
 }
