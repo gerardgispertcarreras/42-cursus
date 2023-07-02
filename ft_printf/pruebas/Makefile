@@ -1,18 +1,44 @@
+# Compiler
+CC = gcc
+
+# Compiler flags
 CFLAGS = -Wall -Wextra -Werror
 
-%.o : %.c libftprintf.h
-	$(CC) $(CFLAGS) $< -c -o $@
+# Include directories
+INCLUDES = -I../Libft
 
-all: c diu xX p main
+# Library directories
+LIB_DIRS = -L../ -L../Libft
 
-c: ../srcs/ft_putchar.o ../Libft/srcs/ft_putchar_fd.o c.o
-	$(CC) $(CFLAGS) -o $@ $^
-diu: ../srcs/ft_putnbr.o ../srcs/ft_putnbr.o diu.o
-	$(CC) $(CFLAGS) -o $@ $^
-xX: ../srcs/x_format.o ../srcs/X_format.o xX.o
-	$(CC) $(CFLAGS) -o $@ $^
+# Libraries to link
+LIBS = -lftprintf -lft
 
-p: ../srcs/p_format.o p.o
-	$(CC) $(CFLAGS) -o $@ $^
-main: main.o ../ft_printf.o ../srcs/ft_putchar.o ../srcs/ft_putnbr.o ../srcs/ft_pointerHandler.o ../srcs/ft_putstr.o ../Libft/srcs/ft_strlen.o 
-	$(CC) $(CFLAGS) -o $@ $^
+# Object files
+OBJ_FILES = main.o ../srcs/ft_printf.o
+
+# Build rule
+all: main
+
+# Target executable
+main: $(OBJ_FILES)
+	$(CC) $(CFLAGS)  $(LIB_DIRS) $(OBJ_FILES) $(LIBS) -o $@
+
+# Object file compilation rule
+%.o: %.c
+	$(CC) $(CFLAGS)  -c $< -o $@
+
+../srcs/%.o: ../srcs/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Clean rule
+clean:
+	rm -f $(OBJ_FILES)
+
+# Full clean rule
+fclean: clean
+	rm -f main
+
+# Rebuild rule
+re: fclean all
+
+.PHONY: all clean fclean re

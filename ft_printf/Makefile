@@ -6,20 +6,21 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/29 13:04:04 by ggispert          #+#    #+#              #
-#    Updated: 2023/05/18 18:42:49 by ggispert         ###   ########.fr        #
+#    Updated: 2023/06/27 12:43:03 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = srcs/ft_printf.c
+SRCS = srcs/ft_printf.c srcs/ft_putchar.c srcs/ft_putstr.c srcs/ft_putnbr.c srcs/ft_pointerHandler.c
 OBJS = $(SRCS:%.c=%.o)
 CFLAGS = -Wall -Werror -Wextra
 HEADER = libftprintf.h
 
 %.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) $< -c -o $@
+	$(CC) $(CFLAGS) $< -c -o $@ -L../Libft -lft
 
 all:
+	$(MAKE) -C Libft/
 	$(MAKE) $(NAME)
 
 $(NAME): $(OBJS)

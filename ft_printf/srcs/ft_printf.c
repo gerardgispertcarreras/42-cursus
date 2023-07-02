@@ -6,11 +6,11 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:24:13 by ggispert          #+#    #+#             */
-/*   Updated: 2023/06/26 14:05:32 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:51:52 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "../libftprintf.h"
 
 int	format(char c, va_list args, int *error)
 {
