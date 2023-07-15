@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 19:35:36 by ggispert          #+#    #+#             */
-/*   Updated: 2023/04/29 12:34:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:45:59 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	char	*p;
-	
+
 	p = malloc(count * size);
 	if (p == NULL)
 		return (NULL);

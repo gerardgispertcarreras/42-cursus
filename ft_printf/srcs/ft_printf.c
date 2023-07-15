@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:24:13 by ggispert          #+#    #+#             */
-/*   Updated: 2023/06/27 11:51:52 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:37:10 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,52 @@
 
 int	format(char c, va_list args, int *error)
 {
-	size_t	sizeOfParse;
+	size_t	comp_size;
 
-	sizeOfParse = 0;
+	comp_size = 0;
 	if (c == 'c')
-		sizeOfParse += ft_putchar(va_arg(args, int), error);
+		comp_size += ft_putchar(va_arg(args, int), error);
 	else if (c == 's')
-		sizeOfParse += ft_putstr(va_arg(args, char *), error);
+		comp_size += ft_putstr(va_arg(args, char *), error);
 	else if (c == 'p')
-		sizeOfParse += ft_pointerHandler(va_arg(args, unsigned long long), error);
+		comp_size += ft_pointhandl(va_arg(args, unsigned long long), error);
 	else if (c == 'd')
-		sizeOfParse += ft_putint(va_arg(args, int), error);
+		comp_size += ft_putint(va_arg(args, int), error);
 	else if (c == 'i')
-		sizeOfParse += ft_putint(va_arg(args, int), error);
+		comp_size += ft_putint(va_arg(args, int), error);
 	else if (c == 'u')
-		sizeOfParse += ft_putuint(va_arg(args, unsigned int), error);
+		comp_size += ft_putuint(va_arg(args, unsigned int), error);
 	else if (c == 'x')
-		sizeOfParse += ft_putuintHex(va_arg(args, unsigned int), 0, error);
+		comp_size += ft_putuinthex(va_arg(args, unsigned int), 0, error);
 	else if (c == 'X')
-		sizeOfParse += ft_putuintHex(va_arg(args, unsigned int), 1, error);
+		comp_size += ft_putuinthex(va_arg(args, unsigned int), 1, error);
 	else if (c == '%')
-		sizeOfParse += ft_putchar('%', error);
-	return (sizeOfParse);
+		comp_size += ft_putchar('%', error);
+	return (comp_size);
 }
 
-int ft_printf(char const *s, ...)
+int	ft_printf(char const *s, ...)
 {
-	va_list args;
+	va_list	args;
 	size_t	i;
-	size_t sizePrinted;
-	int	error;
+	size_t	size_printed;
+	int		error;
 
 	va_start(args, s);
 	i = 0;
-	sizePrinted = 0;
+	size_printed = 0;
 	error = 0;
 	while (s[i] != '\0' && error != -1)
 	{
 		if (s[i] != '%')
 		{
 			error = write(1, &s[i], 1);
-			++sizePrinted;
+			++size_printed;
 		}
 		else
-			sizePrinted += format(s[++i], args, &error);
+			size_printed += format(s[++i], args, &error);
 		++i;
 	}
 	va_end(args);
-	return (sizePrinted);
+	return (size_printed);
 }

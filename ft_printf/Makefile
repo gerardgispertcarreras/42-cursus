@@ -6,12 +6,12 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/29 13:04:04 by ggispert          #+#    #+#              #
-#    Updated: 2023/07/15 19:53:19 by ggispert         ###   ########.fr        #
+#    Updated: 2023/07/15 20:30:19 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = srcs/ft_printf.c srcs/ft_pointerHandler.c srcs/ft_putchar.c srcs/ft_putnbr.c srcs/ft_putstr.c
+SRCS = srcs/ft_printf.c srcs/ft_pointhandl.c srcs/ft_putchar.c srcs/ft_putnbr.c srcs/ft_putstr.c
 OBJS = $(SRCS:%.c=%.o)
 CFLAGS = -Wall -Werror -Wextra
 HEADER = libftprintf.h
