@@ -1,44 +1,26 @@
-# Compiler
 CC = gcc
-
-# Compiler flags
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -L../ -lftprintf
 
-# Include directories
-INCLUDES = -I../Libft
+PRUEBAS_SRC = main.c
+PRUEBAS_OBJ = $(PRUEBAS_SRC:.c=.o)
 
-# Library directories
-LIB_DIRS = -L../ -L../Libft
-
-# Libraries to link
-LIBS = -lftprintf -lft
-
-# Object files
-OBJ_FILES = main.o ../srcs/ft_printf.o
-
-# Build rule
-all: main
-
-# Target executable
-main: $(OBJ_FILES)
-	$(CC) $(CFLAGS)  $(LIB_DIRS) $(OBJ_FILES) $(LIBS) -o $@
-
-# Object file compilation rule
-%.o: %.c
-	$(CC) $(CFLAGS)  -c $< -o $@
-
-../srcs/%.o: ../srcs/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-# Clean rule
-clean:
-	rm -f $(OBJ_FILES)
-
-# Full clean rule
-fclean: clean
-	rm -f main
-
-# Rebuild rule
-re: fclean all
+TARGET = main
 
 .PHONY: all clean fclean re
+
+all: $(TARGET)
+
+$(TARGET): $(PRUEBAS_OBJ) ../libftprintf.a
+	@$(CC) $(CFLAGS) $(PRUEBAS_OBJ) -o $@ $(LDFLAGS)
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
+
+clean:
+	@rm -f $(PRUEBAS_OBJ) $(TARGET)
+
+fclean: clean
+	@rm -f ../libftprintf.a
+
+re: fclean all
