@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/29 13:04:04 by ggispert          #+#    #+#              #
-#    Updated: 2023/07/15 19:20:45 by ggispert         ###   ########.fr        #
+#    Updated: 2023/07/15 19:53:19 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,24 +16,30 @@ OBJS = $(SRCS:%.c=%.o)
 CFLAGS = -Wall -Werror -Wextra
 HEADER = libftprintf.h
 LIBFT_PATH = $(CURDIR)/Libft
+LIBFT_NAME = ft
 
 %.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) $< -c -o $@
+	@echo "Compiling $@"
+	@$(CC) $(CFLAGS) $< -c -o $@
 
 all:
-	$(MAKE) $(NAME)
+	@$(MAKE) $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -C $(LIBFT_PATH)
-	cp $(LIBFT_PATH)/libft.a $(NAME)
-	ar -rcs $(NAME) $(OBJS)
+	@$(MAKE) -C $(LIBFT_PATH)
+	@cp $(LIBFT_PATH)/lib$(LIBFT_NAME).a $(NAME)
+	@echo "Creating $@"
+	@ar -rcs $(NAME) $(OBJS)
 
 clean:
-	rm -rf ./srcs/*.o 
+	@echo "Removing libftprintf sources"
+	@rm -f ./srcs/*.o 
 
 fclean:
-	$(MAKE) clean
-	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) clean
+	@rm -f $(NAME)
 
 re:
-	$(MAKE) fclean $(NAME)
+	@echo "Recompiling"
+	@$(MAKE) fclean $(NAME)

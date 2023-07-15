@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 18:43:48 by ggispert          #+#    #+#              #
-#    Updated: 2023/06/27 11:43:20 by ggispert         ###   ########.fr        #
+#    Updated: 2023/07/15 19:50:11 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,24 +26,28 @@ CFLAGS = -Wall -Werror -Wextra
 HEADER = libft.h
 
 %.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) $< -c -o $@
+	@echo "Compiling $@"
+	@$(CC) $(CFLAGS) $< -c -o $@
 
 all: 
-	$(MAKE) $(NAME)
+	@$(MAKE) $(NAME)
 
 $(NAME): $(OBJS)
-	ar -rcs $(NAME) $(OBJS)
+	@echo "Creating $@"
+	@ar -rcs $(NAME) $(OBJS)
 
 bonus: $(OBJS_BONUS) $(OBJS)
+	@echo "Creating $@"
 	ar -rcs $(NAME) $(OBJS) $(OBJS_BONUS)
 	touch bonus
 
 clean:
-	rm -f ./srcs/*.o ./srcs/bonus
+	@echo "Removing libft sources"
+	@rm -f ./srcs/*.o ./srcs/bonus
 
 fclean:
-	$(MAKE) clean
-	rm -f $(NAME)
+	@$(MAKE) clean
+	@rm -f $(NAME)
 
 re:	
 	$(MAKE) fclean $(NAME)
