@@ -6,11 +6,11 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:24:13 by ggispert          #+#    #+#             */
-/*   Updated: 2023/07/15 20:37:10 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/07/24 18:36:54 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libftprintf.h"
+#include "../ft_printf.h"
 
 int	format(char c, va_list args, int *error)
 {
@@ -61,5 +61,7 @@ int	ft_printf(char const *s, ...)
 		++i;
 	}
 	va_end(args);
+	if (error == -1)
+		return (error);
 	return (size_printed);
 }

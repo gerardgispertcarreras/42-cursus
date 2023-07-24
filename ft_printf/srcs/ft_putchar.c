@@ -6,11 +6,11 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 12:24:28 by ggispert          #+#    #+#             */
-/*   Updated: 2023/07/15 20:32:58 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/07/24 18:28:33 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libftprintf.h"
+#include "../ft_printf.h"
 
 int	ft_putchar(int c, int *error)
 {
