@@ -13,15 +13,16 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "./Libft/libft.h"
 # include <stdarg.h>
+# include <unistd.h>
 
-int	ft_printf(char const *s, ...);
-int	ft_putchar(int c, int *error);
-int	ft_putint(int n, int *error);
-int	ft_putuint(unsigned int n, int *error);
-int	ft_putuinthex(unsigned int n, char mayus, int *error);
-int	ft_putstr(char *s, int *error);
-int	ft_pointhandl(unsigned long long p, int *error);
+int		ft_printf(char const *s, ...);
+int		ft_putchar(int c, int *error);
+int		ft_putint(int n, int *error);
+int		ft_putuint(unsigned int n, int *error);
+int		ft_putuinthex(unsigned int n, char mayus, int *error);
+int		ft_putstr(char *s, int *error);
+int		ft_pointhandl(unsigned long long p, int *error);
+size_t	ft_strlen(const char *s);
 
 #endif

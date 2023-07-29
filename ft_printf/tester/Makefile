@@ -12,10 +12,10 @@ TARGET = main
 all: $(TARGET)
 
 $(TARGET): $(PRUEBAS_OBJ) ../libftprintf.a
-	@$(CC) $(CFLAGS) $(PRUEBAS_OBJ) -o $@ $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(PRUEBAS_OBJ) -o $@ $(LDFLAGS) 
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
+	@$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
 	@rm -f $(PRUEBAS_OBJ) $(TARGET)
