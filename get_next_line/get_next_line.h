@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:38 by ggispert          #+#    #+#             */
-/*   Updated: 2023/07/19 11:42:25 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:29:11 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*get_line(int fd, char *saved, int *error);
+char	*get_full_line(int fd, char *saved, int *error);
 int		save_endl(char *buffer, char **line, char *saved);
 int		search_endl(const char *s);
 char	*read_protection(int rd, char *s, int *error);
