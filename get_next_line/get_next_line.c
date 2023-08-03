@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:34 by ggispert          #+#    #+#             */
-/*   Updated: 2023/08/01 20:58:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:27:24 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,49 +20,50 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = get_full_line(fd, saved, error);
+	line = get_full_line(fd, saved, &error);
+	if (error == -1)
+		return (NULL);
 	return (line);
 }
 
 char	*get_full_line(int fd, char *saved, int *error)
 {
 	char	*line;
-	char	finished;
+	int		endl;
 	char	*buffer;
 	int		rd;
 
-	//buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	buffer = ft_strdup(saved);
+	line = NULL;
+	rd = 1;
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (ft_protection(buffer, error));
-	finished = save_endl(buffer, saved);
-	while (!finished)
+		return (ft_protection(buffer, line, error));
+	ft_strlcpy(buffer, saved, BUFFER_SIZE + 1);
+	line = ft_strjoin(line, get_and_save_line(buffer, saved, &endl));
+	while (rd != 0 && endl == 0)
 	{
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd == -1)
-			return (ft_protection(buffer, error));
+			return (ft_protection(buffer, line, error));
 		buffer[rd] = '\0';
-		//evaluar si tenemos el endl y cambiar el finished si es el caso
-		line = ft_strjoin(line, buffer);
-		if (line == NULL)
-			return (ft_protection(buffer, error));
+		line = ft_strjoin(line, get_and_save_line(buffer, saved, &endl));
+		if (line == NULL && rd != 0)
+			return (ft_protection(buffer, line, error));
 	}
 	free(buffer);
 	return (line);
 }
 
-int	save_endl(char *buffer, char **line, char *saved)
+char	*get_and_save_line(char *buffer, char *saved, int *endl)
 {
-	int	i;
-
-	i = search_endl(buffer);
+	*endl = search_endl(buffer);
 	saved[0] = '\0';
-	if (i > 0)
+	if (*endl > 0)
 	{
-		ft_strlcpy(saved, buffer + i, BUFFER_SIZE + 1);
-		buffer[i] = '/0';
+		ft_strlcpy(saved, buffer + *endl, BUFFER_SIZE + 1);
+		buffer[*endl] = '\0';
 	}
-	return (i);
+	return (buffer);
 }
 
 int	search_endl(const char *s)
@@ -78,10 +79,10 @@ int	search_endl(const char *s)
 	return (0);
 }
 
-char	*ft_protection(char *s, int *error)
+char	*ft_protection(char *s1, char *s2, int *error)
 {
 	*error = -1;
-	free(s);
+	free(s1);
+	free(s2);
 	return (NULL);
 }
-
