@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:34 by ggispert          #+#    #+#             */
-/*   Updated: 2023/08/03 21:27:24 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:20:11 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*get_full_line(int fd, char *saved, int *error)
 	if (!buffer)
 		return (ft_protection(buffer, line, error));
 	ft_strlcpy(buffer, saved, BUFFER_SIZE + 1);
+	saved[0] = '\0';
 	line = ft_strjoin(line, get_and_save_line(buffer, saved, &endl));
 	while (rd != 0 && endl == 0)
 	{
@@ -57,7 +58,6 @@ char	*get_full_line(int fd, char *saved, int *error)
 char	*get_and_save_line(char *buffer, char *saved, int *endl)
 {
 	*endl = search_endl(buffer);
-	saved[0] = '\0';
 	if (*endl > 0)
 	{
 		ft_strlcpy(saved, buffer + *endl, BUFFER_SIZE + 1);
