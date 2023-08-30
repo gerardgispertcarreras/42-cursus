@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:38 by ggispert          #+#    #+#             */
-/*   Updated: 2023/08/03 20:58:53 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/04 09:17:24 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		search_endl(const char *s);
 char	*ft_protection(char *s1, char *s2, int *error);
 char	*ft_strjoin(char *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 
 #endif

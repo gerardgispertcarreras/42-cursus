@@ -6,7 +6,11 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:30 by ggispert          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/08/04 15:21:20 by ggispert         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/04 09:17:19 by ggispert         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
