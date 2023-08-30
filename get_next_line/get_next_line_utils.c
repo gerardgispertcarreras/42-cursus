@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:14:30 by ggispert          #+#    #+#             */
-/*   Updated: 2023/08/03 21:05:29 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:21:20 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		dst[i] = '\0';
 	}
 	return (srcsize);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*p;
-	size_t	len;
-
-	len = ft_strlen(s1) + 1;
-	p = malloc(len * sizeof(char));
-	if (p == NULL)
-		return (NULL);
-	ft_strlcpy(p, s1, len);
-	return (p);
 }
 
 size_t	ft_strlen(const char *s)
