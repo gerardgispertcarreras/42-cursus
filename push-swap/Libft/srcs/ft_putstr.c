@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/29 19:17:11 by ggispert          #+#    #+#             */
-/*   Updated: 2023/09/07 11:31:21 by ggispert         ###   ########.fr       */
+/*   Created: 2023/04/30 12:24:28 by ggispert          #+#    #+#             */
+/*   Updated: 2023/08/30 16:45:08 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Libft/libft.h"
+#include "../libft.h"
 
-typedef struct s_stack
+int	ft_putstr(char *s, int *error)
 {
-	int	*values;
-	int	size;
-}				t_stack;
+	size_t	len;
+	int		printed;
 
-void	push_swap(t_stack *A, t_stack *B, int max_size);
-void	convert_arg_to_stack(int argc, char **argv, t_stack *A);
+	if (s != NULL)
+	{
+		len = ft_strlen(s);
+		printed = write(1, s, (len * sizeof(char)));
+		if (printed == -1)
+			*error = -1;
+		return (printed);
+	}
+	else
+	{
+		printed = write(1, "(null)", 6);
+		return (printed);
+	}
+}

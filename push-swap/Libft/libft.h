@@ -6,13 +6,14 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:43:43 by ggispert          #+#    #+#             */
-/*   Updated: 2023/05/01 12:26:59 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:45:36 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdarg.h>
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -68,5 +69,13 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+int		ft_printf(char const *s, ...);
+int		ft_putchar(int c, int *error);
+int		ft_putint(int n, int *error);
+int		ft_putuint(unsigned int n, int *error);
+int		ft_putuinthex(unsigned int n, char mayus, int *error);
+int		ft_putstr(char *s, int *error);
+int		ft_pointhandl(unsigned long long p, int *error);
 
 #endif

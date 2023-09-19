@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 18:43:48 by ggispert          #+#    #+#              #
-#    Updated: 2023/08/29 19:59:11 by ggispert         ###   ########.fr        #
+#    Updated: 2023/08/30 16:42:55 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = 	srcs/ft_isalpha.c srcs/ft_isupper.c srcs/ft_islower.c srcs/ft_isdigit.c 
 				srcs/ft_split.c srcs/ft_itoa.c srcs/ft_strmapi.c srcs/ft_striteri.c srcs/ft_putchar_fd.c srcs/ft_putstr_fd.c\
 				srcs/ft_putendl_fd.c srcs/ft_putnbr_fd.c srcs/ft_lstnew_bonus.c srcs/ft_lstadd_front_bonus.c srcs/ft_lstsize_bonus.c srcs/ft_lstlast_bonus.c\
 				srcs/ft_lstadd_back_bonus.c srcs/ft_lstdelone_bonus.c srcs/ft_lstclear_bonus.c srcs/ft_lstiter_bonus.c\
-				srcs/ft_lstmap_bonus.c
+				srcs/ft_lstmap_bonus.c srcs/ft_printf.c srcs/ft_pointhandl.c srcs/ft_putchar.c srcs/ft_putnbr.c srcs/ft_putstr.c srcs/ft_strlen.c
 OBJS =	$(SRCS:%.c=%.o)
 CFLAGS = -Wall -Werror -Wextra
 HEADER = libft.h
