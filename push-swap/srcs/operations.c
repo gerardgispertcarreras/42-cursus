@@ -6,16 +6,11 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 11:25:53 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/03 17:10:02 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:21:46 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-void	swap(t_stack *A, t_stack *B, char stack);
-void	push(t_stack *A, t_stack *B, char stack);
-void	rotate(t_stack *A, t_stack *B, char stack);
-void	reverse_rotate(t_stack *A, t_stack *B, char stack);
 
 void	operate(t_stack *A, t_stack *B, char *op)
 {
@@ -35,7 +30,6 @@ void	operate(t_stack *A, t_stack *B, char *op)
 
 void	swap(t_stack *A, t_stack *B, char stack)
 {
-	int		temp;
 	t_stack	*s;
 
 	if (stack == 'a')
@@ -48,82 +42,66 @@ void	swap(t_stack *A, t_stack *B, char stack)
 		swap(A, B, 'b');
 		return ;
 	}
-	temp = top(s);
-	s->values[0] = A->values[1];
-	s->values[1] = temp;
+	swap_stack(s);
 }
 
 void	push(t_stack *A, t_stack *B, char stack)
 {
-	int		temp;
-	int		i;
-	t_stack	*s1;
-	t_stack	*s2;
+	t_stack	*stack_origin;
+	t_stack	*stack_destination;
+	t_node	*node;
 
 	if (stack == 'a')
 	{
-		s1 = B;
-		s2 = A;
+		stack_origin = B;
+		stack_destination = A;
 	}
 	else if (stack == 'b')
 	{
-		s1 = A;
-		s2 = B;
+		stack_origin = A;
+		stack_destination = B;
 	}
-	temp = s1->values[0];
-	i = 0;
-	while (++i < s1->size)
-		s1->values[i - 1] = s1->values[i];
-	i = s2->size + 1;
-	while (--i > 0)
-		s2->values[i] = s2->values[i - 1];
-	s2->values[0] = temp;
-	--(s1->size);
-	++(s2->size);
+	node = stack_origin->top;
+	remove_stack_top(stack_origin);
+	set_stack_top(stack_destination, node);
 }
 
-void	rotate(t_stack *A, t_stack *B, char stack)
+void	rotate(t_stack *A, t_stack *B, char stack_selected)
 {
-	int		temp;
-	int		i;
-	t_stack	*s;
+	t_stack	*stack;
+	t_node	*node;
 
-	if (stack == 'a')
-		s = A;
-	else if (stack == 'b')
-		s = B;
-	else if (stack == 'r')
+	if (stack_selected == 'a')
+		stack = A;
+	else if (stack_selected == 'b')
+		stack = B;
+	else if (stack_selected == 'r')
 	{
 		rotate(A, B, 'a');
 		rotate(A, B, 'b');
 		return ;
 	}
-	temp = s->values[0];
-	i = 0;
-	while (++i < s->size)
-		s->values[i - 1] = s->values[i];
-	s->values[i - 1] = temp;
+	node = stack->top;
+	remove_stack_top(stack);
+	set_stack_bot(stack, node);
 }
 
-void	reverse_rotate(t_stack *A, t_stack *B, char stack)
+void	reverse_rotate(t_stack *A, t_stack *B, char stack_selected)
 {
-	int		temp;
-	int		i;
-	t_stack	*s;
+	t_stack	*stack;
+	t_node	*node;
 
-	if (stack == 'a')
-		s = A;
-	else if (stack == 'b')
-		s = B;
-	else if (stack == 'r')
+	if (stack_selected == 'a')
+		stack = A;
+	else if (stack_selected == 'b')
+		stack = B;
+	else if (stack_selected == 'r')
 	{
 		reverse_rotate(A, B, 'a');
 		reverse_rotate(A, B, 'b');
 		return ;
 	}
-	temp = s->values[s->size - 1];
-	i = s->size;
-	while (--i > 0)
-		s->values[i] = s->values[i - 1];
-	s->values[0] = temp;
+	node = stack->bot;
+	remove_stack_bot(stack);
+	set_stack_top(stack, node);
 }
