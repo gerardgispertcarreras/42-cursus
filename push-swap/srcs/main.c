@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:16:54 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/05 11:37:50 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/05 18:28:10 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,52 @@
 
 /*
 	Init stack function
-	It saves memory for the maximum numbers it will handle but it remains empty.
+	It sets the t_stack props to default.
 	Params:
-		S: the stack wanted to be initialized
-		max_size: the maximum size that the stack might handle
+		S: stack.
 */
-void	init_stack(t_stack *S, int max_size)
+void	init_stack(t_stack *S)
 {
-	S->values = malloc(max_size * sizeof(int));
+	S->top = NULL;
+	S->bot = NULL;
 	S->size = 0;
-	if (S->values == NULL)
-		exit (0);
+}
+
+/*
+	Free stack function
+	It frees the memory of a node and all the next ones. (recursive)
+	Params:
+		n: node.
+*/
+void	free_nodes(t_node *n)
+{
+	if (n == NULL)
+		return ;
+	if (n->next != NULL)
+		free_nodes(n->next);
+	n->value = 0;
+	n->next = NULL;
+	n->prev = NULL;
+	free(n);
 }
 
 /*
 	Free stack function
 	It frees the memory of a stack.
 	Params:
-		S: the stack wanted to be freed
+		S: stack.
 */
 void	free_stack(t_stack *S)
 {
-	free(S->values);
+	free_nodes(S->top);
+	S->top = NULL;
+	S->bot = NULL;
+	S->size = 0;
 }
 
 /*
 	Main function
-	Params:
+	Args:
 		A list of ints is expected.
 		Ex: ./push_swap 3 42 5 -3 412
 */
@@ -48,15 +67,17 @@ int	main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
-	int		max_size;
 
 	if (argc > 1)
 	{
-		max_size = argc - 1;
-		init_stack(&a, max_size);
+		init_stack(&a);
+		init_stack(&b);
 		convert_arg_to_stack(argc, argv, &a);
-		init_stack(&b, max_size);
 		push_swap(&a, &b);
+		ft_printf("Stack A:\n");
+		printStackValues(&a);
+		ft_printf("Stack B:\n");
+		printStackValues(&b);
 		free_stack(&a);
 		free_stack(&b);
 	}
