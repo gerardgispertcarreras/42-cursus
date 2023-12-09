@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   reset_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/29 19:16:54 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 12:56:44 by ggispert         ###   ########.fr       */
+/*   Created: 2023/12/09 13:38:54 by ggispert          #+#    #+#             */
+/*   Updated: 2023/12/09 13:40:38 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
-/*
-	Main function
-	Args:
-		A list of ints is expected.
-		Ex: ./push_swap 3 42 5 -3 412
-*/
-int	main(int argc, char **argv)
+void reset_stack(t_stack *a, t_stack *b, char stack_selected, char sort_ascending)
 {
-	t_stack	a;
-	t_stack	b;
+	t_stack *stack;
+	int moves;
 
-	if (argc > 1)
-	{
-		init_stack(&a);
-		init_stack(&b);
-		convert_arg_to_stack(argc, argv, &a);
-		push_swap(&a, &b);
-		free_stack(&a);
-		free_stack(&b);
-	}
-	return (0);
+	stack = stack_selector(a, b, stack_selected);
+	moves = calc_moves_by_index(stack, get_index_top_stack(stack, sort_ascending));
+	execute_moves_simple(a, b, moves, stack_selected);
 }

@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:34:58 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/05 18:36:46 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:26:35 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 	Params:
 		s: string.
 */
-void	check_is_int(char *s)
+void check_is_int(char *s)
 {
-	int		i;
-	int		sig;
-	long	num;
+	int i;
+	int sig;
+	long num;
 
-	if (s[0] == '\0')
-		ft_error();
 	i = 0;
 	sig = 1;
 	if (s[i] == '-' || s[i] == '+')
@@ -34,17 +32,19 @@ void	check_is_int(char *s)
 			sig = -1;
 		++i;
 	}
+	if (s[i] == '\0')
+		error_handler();
 	num = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] < '0' || s[i] > '9' || i > 11)
-			ft_error();
+			error_handler();
 		num *= 10;
 		num += sig * (s[i] - '0');
 		++i;
 	}
 	if ((sig == 1 && num > 2147483647) || (sig == -1 && num < -2147483648))
-		ft_error();
+		error_handler();
 }
 
 /*
@@ -54,15 +54,15 @@ void	check_is_int(char *s)
 		nums: numbers already placed.
 		index: position of the last number placed which is the number to check.
 */
-void	check_not_dup(int *nums, int index)
+void check_not_dup(int *nums, int index)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < index)
 	{
 		if (nums[i] == nums[index])
-			ft_error();
+			error_handler();
 		++i;
 	}
 }
@@ -78,10 +78,10 @@ void	check_not_dup(int *nums, int index)
 		The number simplified. It starts on 0 and adds 1 for every
 		number smaller than it in the list.
 */
-int	calc_simplified_num(int *nums, int n, int size)
+int calc_simplified_num(int *nums, int n, int size)
 {
-	int	i;
-	int	simplified_n;
+	int i;
+	int simplified_n;
 
 	i = -1;
 	simplified_n = 0;
@@ -101,11 +101,11 @@ int	calc_simplified_num(int *nums, int n, int size)
 		nums: numbers not simplified.
 		size: size of the number list.
 */
-void	simplify_stack(t_stack *S, int *nums, int size)
+void simplify_stack(t_stack *S, int *nums, int size)
 {
-	int		i;
-	t_node	*node_current;
-	t_node	*node_prev;
+	int i;
+	t_node *node_current;
+	t_node *node_prev;
 
 	node_current = malloc(sizeof(t_node));
 	if (node_current == NULL)
@@ -137,10 +137,10 @@ void	simplify_stack(t_stack *S, int *nums, int size)
 		argv: number list.
 		A: stack.
 */
-void	convert_arg_to_stack(int argc, char **argv, t_stack *A)
+void convert_arg_to_stack(int argc, char **argv, t_stack *A)
 {
-	int	*nums;
-	int	i;
+	int *nums;
+	int i;
 
 	i = 1;
 	nums = malloc((argc - 1) * sizeof(int));

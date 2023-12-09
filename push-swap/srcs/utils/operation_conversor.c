@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   operation_conversor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/05 18:31:36 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/05 18:31:56 by ggispert         ###   ########.fr       */
+/*   Created: 2023/12/09 13:39:50 by ggispert          #+#    #+#             */
+/*   Updated: 2023/12/09 13:54:50 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
-/*
-	Usage error resolver function
-	Handles errors.
-	No params.
-*/
-void	ft_error(void)
+char *operation_conversor(char *operation, char stack_selected)
 {
-	ft_printf("Error\n");
-	exit(0);
+	char *op_converted;
+	int		size;
+
+	op_converted = malloc((ft_strlen(operation) + 2) * sizeof(char));
+	size = ft_strlen(operation);
+	ft_strlcpy(op_converted, operation, 3);
+	op_converted[size] = stack_selected;
+	op_converted[size + 1] = '\0';
+	return (op_converted);
 }

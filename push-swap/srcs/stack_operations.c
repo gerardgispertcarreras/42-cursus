@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:20:11 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/05 20:22:30 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:24:09 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	swap_stack(t_stack *stack)
 	node_first = stack->top;
 	node_second = node_first->next;
 	node_third = node_second->next;
-	node_third->prev = node_first;
+	if (node_third)
+		node_third->prev = node_first;
 	node_first->prev = node_second;
 	node_second->next = node_first;
 	node_first->next = node_third;

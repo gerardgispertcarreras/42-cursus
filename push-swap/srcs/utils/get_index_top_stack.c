@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_index_top_stack.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/29 19:16:54 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 12:56:44 by ggispert         ###   ########.fr       */
+/*   Created: 2023/12/09 13:38:14 by ggispert          #+#    #+#             */
+/*   Updated: 2023/12/09 13:40:27 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
-/*
-	Main function
-	Args:
-		A list of ints is expected.
-		Ex: ./push_swap 3 42 5 -3 412
-*/
-int	main(int argc, char **argv)
+int get_index_top_stack(t_stack *stack, char sort_ascending)
 {
-	t_stack	a;
-	t_stack	b;
+	t_node *node;
+	int i;
+	int top_index;
+	int top_value;
 
-	if (argc > 1)
+	node = stack->top;
+	top_index = 0;
+	i = 0;
+	top_value = node->value;
+	while (node != NULL)
 	{
-		init_stack(&a);
-		init_stack(&b);
-		convert_arg_to_stack(argc, argv, &a);
-		push_swap(&a, &b);
-		free_stack(&a);
-		free_stack(&b);
+		if (evaluate_sorting(node->value, top_value, sort_ascending))
+		{
+			top_index = i;
+			top_value = node->value;
+		}
+		node = node->next;
+		++i;
 	}
-	return (0);
+	return (top_index);
 }

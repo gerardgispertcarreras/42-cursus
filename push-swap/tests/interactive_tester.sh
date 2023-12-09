@@ -66,6 +66,7 @@ do
   if [[ "$checker_output" == "OK" ]]; then
     ((ok_count++))
   elif [[ "$checker_output" == "KO" ]]; then
+    echo "${shuffled_numbers[@]}"
     ((ko_count++))
   fi
  
