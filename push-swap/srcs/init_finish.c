@@ -6,60 +6,56 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 18:31:36 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 14:23:27 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:47:30 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 /*
-	Init stack function
-	It sets the t_stack props to default.
+	This function sets the t_stack props to default.
 	Params:
 		S: stack.
 */
-void	init_stack(t_stack *S)
+void	init_stack(t_stack *stack)
 {
-	S->top = NULL;
-	S->bot = NULL;
-	S->size = 0;
+	stack->top = NULL;
+	stack->bot = NULL;
+	stack->size = 0;
 }
 
 /*
-	Free stack function
-	It frees the memory of a node and all the next ones. (recursive)
+	This function frees the memory of a node and all the next ones. (recursive)
 	Params:
 		n: node.
 */
-void	free_nodes(t_node *n)
+void	free_nodes(t_node *node)
 {
-	if (n == NULL)
+	if (node == NULL)
 		return ;
-	if (n->next != NULL)
-		free_nodes(n->next);
-	n->value = 0;
-	n->next = NULL;
-	n->prev = NULL;
-	free(n);
+	if (node->next != NULL)
+		free_nodes(node->next);
+	node->value = 0;
+	node->next = NULL;
+	node->prev = NULL;
+	free(node);
 }
 
 /*
-	Free stack function
-	It frees the memory of a stack.
+	This function frees the memory of a stack.
 	Params:
 		S: stack.
 */
-void	free_stack(t_stack *S)
+void	free_stack(t_stack *stack)
 {
-	free_nodes(S->top);
-	S->top = NULL;
-	S->bot = NULL;
-	S->size = 0;
+	free_nodes(stack->top);
+	stack->top = NULL;
+	stack->bot = NULL;
+	stack->size = 0;
 }
 
 /*
-	Usage error resolver function
-	Handles errors.
+	This function handles the errors in the arguments.
 	No params.
 */
 void	error_handler(void)

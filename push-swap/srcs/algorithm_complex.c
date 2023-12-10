@@ -6,72 +6,68 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:14:37 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 13:25:38 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:29:55 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 /*
-	Algorithm for more than 8 numbers
-	It makes a pseudo sorting splitting the numbers in split_parts
-	blocks and reordering them back afterwards.
+	This function sorts stacks. Only used for more than 8 numbers in this case.
 	Params:
-		A: stack with the numbers list.
-		B: empty stack.
-		split_parts: number of parts for the first sort.
+		a: stack with the numbers list.
+		b: empty stack.
 */
-void algorithm_complex(t_stack *A, t_stack *B, int split_parts)
+void	algorithm_complex(t_stack *a, t_stack *b, int split_parts)
 {
-	split_stack(A, B, split_parts);
-	reorder(A, B);
+	split_stack(a, b, split_parts);
+	reorder(a, b);
 }
 
 /*
-	Splitting stack function
-	It splits the stack in the specified number of blocks.
+	This function splits the stack a in the specified number of blocks
+	into stack b. Every block is also sorted in 2 parts.
 	Params:
-		A: stack origin.
-		B: stack destination.
-		split: number of parts to split x 2.
+		a: stack a.
+		b: stack b.
+		split: number of blocks to split the stack.
 */
-void split_stack(t_stack *A, t_stack *B, int split)
+void	split_stack(t_stack *a, t_stack *b, int split)
 {
-	int pivot_top;
-	int pivot_bot;
+	int	pivot_top;
+	int	pivot_bot;
 
 	while (split > 0)
 	{
-		pivot_top = A->size / split + B->size;
-		pivot_bot = A->size / (split * 2) + B->size;
-		while (A->size > 0 && pivot_top > B->size)
-			split_num(A, B, pivot_top, pivot_bot);
+		pivot_top = a->size / split + b->size;
+		pivot_bot = a->size / (split * 2) + b->size;
+		while (a->size > 0 && pivot_top > b->size)
+			split_num(a, b, pivot_top, pivot_bot);
 		--split;
 	}
 }
 
 /*
-	Reorder function
-	It reorders the stack B into A. At the end stack A is sorted.
+	This function reorders the stack b into a.
 	Params:
-		A: stack destination.
-		B: stack origin.
+		a: stack destination.
+		b: stack origin.
 */
-void reorder(t_stack *A, t_stack *B)
+void	reorder(t_stack *a, t_stack *b)
 {
-	int i;
-	int moves;
-	char swap_needed;
+	int		i;
+	int		moves;
+	char	swap_needed;
 
-	i = B->size;
+	i = b->size;
 	while (--i >= 0)
 	{
-		moves = calc_moves_by_num(B, i);
-		swap_needed = execute_moves_complex(A, B, moves, i);
-		operate(A, B, "pa");
+		moves = calc_moves_by_num(b, i);
+		swap_needed = execute_moves_complex(a, b, moves, i);
+		operate(a, b, "pa");
 		if (swap_needed)
 		{
-			operate(A, B, "sa");
+			operate(a, b, "sa");
 			--i;
 		}
 	}

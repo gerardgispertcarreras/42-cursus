@@ -1,36 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operation_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 11:25:53 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/07 20:05:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:58:31 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void operate(t_stack *A, t_stack *B, char *operation)
+/*
+	This function handles the operations.
+	Params:
+		a: stack a.
+		b: stack b.
+		operation: string of the operation.
+*/
+void	operate(t_stack *a, t_stack *b, char *operation)
 {
 	if (operation[0] == 's')
-		swap(A, B, operation[1]);
+		swap(a, b, operation[1]);
 	else if (operation[0] == 'p')
-		push(A, B, operation[1]);
+		push(a, b, operation[1]);
 	else if (operation[0] == 'r')
 	{
 		if (operation[2] == '\0')
-			rotate(A, B, operation[1]);
+			rotate(a, b, operation[1]);
 		else
-			reverse_rotate(A, B, operation[2]);
+			reverse_rotate(a, b, operation[2]);
 	}
 	ft_printf("%s\n", operation);
 }
 
-void swap(t_stack *A, t_stack *B, char stack)
+/*
+	This function executes the swap for the stack selected.
+	Params:
+		a: stack a.
+		b: stack b.
+		stack: stack selected. 'a' or 'b'.
+*/
+void	swap(t_stack *A, t_stack *B, char stack)
 {
-	t_stack *s;
+	t_stack	*s;
 
 	if (stack == 'a')
 		s = A;
@@ -40,16 +54,23 @@ void swap(t_stack *A, t_stack *B, char stack)
 	{
 		swap(A, B, 'a');
 		swap(A, B, 'b');
-		return;
+		return ;
 	}
 	swap_stack(s);
 }
 
-void push(t_stack *A, t_stack *B, char stack)
+/*
+	This function executes the push for the stack selected.
+	Params:
+		a: stack a.
+		b: stack b.
+		stack: stack selected. 'a' or 'b'.
+*/
+void	push(t_stack *A, t_stack *B, char stack)
 {
-	t_stack *stack_origin;
-	t_stack *stack_destination;
-	t_node *node;
+	t_stack	*stack_origin;
+	t_stack	*stack_destination;
+	t_node	*node;
 
 	if (stack == 'a')
 	{
@@ -66,40 +87,54 @@ void push(t_stack *A, t_stack *B, char stack)
 	set_stack_top(stack_destination, node);
 }
 
-void rotate(t_stack *A, t_stack *B, char stack_selected)
+/*
+	This function executes the rotate for the stack selected.
+	Params:
+		a: stack a.
+		b: stack b.
+		stack: stack selected. 'a' or 'b'.
+*/
+void	rotate(t_stack *A, t_stack *B, char selected)
 {
-	t_stack *stack;
-	t_node *node;
+	t_stack	*stack;
+	t_node	*node;
 
-	if (stack_selected == 'a')
+	if (selected == 'a')
 		stack = A;
-	else if (stack_selected == 'b')
+	else if (selected == 'b')
 		stack = B;
-	else if (stack_selected == 'r')
+	else if (selected == 'r')
 	{
 		rotate(A, B, 'a');
 		rotate(A, B, 'b');
-		return;
+		return ;
 	}
 	node = stack->top;
 	remove_stack_top(stack);
 	set_stack_bot(stack, node);
 }
 
-void reverse_rotate(t_stack *A, t_stack *B, char stack_selected)
+/*
+	This function executes the reverse rotate for the stack selected.
+	Params:
+		a: stack a.
+		b: stack b.
+		stack: stack selected. 'a' or 'b'.
+*/
+void	reverse_rotate(t_stack *A, t_stack *B, char selected)
 {
-	t_stack *stack;
-	t_node *node;
+	t_stack	*stack;
+	t_node	*node;
 
-	if (stack_selected == 'a')
+	if (selected == 'a')
 		stack = A;
-	else if (stack_selected == 'b')
+	else if (selected == 'b')
 		stack = B;
-	else if (stack_selected == 'r')
+	else if (selected == 'r')
 	{
 		reverse_rotate(A, B, 'a');
 		reverse_rotate(A, B, 'b');
-		return;
+		return ;
 	}
 	node = stack->bot;
 	remove_stack_bot(stack);

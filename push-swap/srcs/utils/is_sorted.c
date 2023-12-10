@@ -6,37 +6,37 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:29:04 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 13:40:33 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:55:42 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
 /*
-	Is it sorted function
-	It returns True if the stack is sorted. False if not.
+	This function checks if the stack is sorted.
 	Params:
 		stack: stack to check.
+		ascending: if the sorting has to be ascending, 1. 0 otherwise.
 */
-char is_sorted(t_stack *stack, char sort_ascending)
+char	is_sorted(t_stack *stack, char ascending)
 {
-	t_node *node_current;
-	t_node *node_previous;
-	char edge_found;
+	t_node	*node_current;
+	t_node	*node_previous;
+	char	edge_found;
 
 	node_previous = stack->top;
 	node_current = node_previous->next;
 	edge_found = 0;
-	if (evaluate_sorting(stack->bot->value, node_previous->value, sort_ascending))
+	if (eval_sort(stack->bot->value, node_previous->value, ascending))
 		edge_found = 0;
 	else
 		edge_found = 1;
 	while (node_current != NULL)
 	{
-		if (!evaluate_sorting(node_previous->value, node_current->value, sort_ascending))
+		if (!eval_sort(node_previous->value, node_current->value, ascending))
 		{
 			if (edge_found)
-				return 0;
+				return (0);
 			else
 				edge_found = 1;
 		}

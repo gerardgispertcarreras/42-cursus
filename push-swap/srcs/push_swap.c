@@ -6,20 +6,19 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 13:59:46 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 14:30:03 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:01:38 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 /*
-	Push swap algorithm function
-	It calls the correct sorting algorithm depending on the list size
+	This function decides the algorithm to use by size.
 	Params:
-		A: stack with the numbers list
-		B: empty stack
+		a: stack a. (all the number list)
+		b: stack b. (empty)
 */
-void push_swap(t_stack *a, t_stack *b)
+void	push_swap(t_stack *a, t_stack *b)
 {
 	if (is_sorted(a, 1))
 		reset_stack(a, b, 'a', 1);

@@ -6,36 +6,35 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:26:39 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/09 13:40:43 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:04:23 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
 /*
-	Evaluate split of a number function
-	It moves the number of the block range specified.
+	This function checks if the top number in stack a has to be moved to b.
 	Params:
-		A: stack origin.
-		B: stack destination.
+		a: stack a.
+		b: stack b.
 		pivot_top: threshold number to be moved.
 		pivot_bot: threshold number to be moved on the below part.
 */
-void split_num(t_stack *A, t_stack *B, int pivot_top, int pivot_bot)
+void	split_num(t_stack *a, t_stack *b, int pivot_top, int pivot_bot)
 {
-	if (A->top->value < pivot_top)
+	if (a->top->value < pivot_top)
 	{
-		operate(A, B, "pb");
-		if (B->top->value < pivot_bot)
+		operate(a, b, "pb");
+		if (b->top->value < pivot_bot)
 		{
-			if (pivot_top > B->size && A->top->value >= pivot_top)
-				operate(A, B, "rr");
+			if (pivot_top > b->size && a->top->value >= pivot_top)
+				operate(a, b, "rr");
 			else
-				operate(A, B, "rb");
+				operate(a, b, "rb");
 		}
 	}
 	else
 	{
-		operate(A, B, "ra");
+		operate(a, b, "ra");
 	}
 }

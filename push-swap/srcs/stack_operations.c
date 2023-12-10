@@ -6,12 +6,17 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:20:11 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/06 12:24:09 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:04:11 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
+/*
+	This function swaps the two first elements of the stack.
+	Params:
+		stack: stack.
+*/
 void	swap_stack(t_stack *stack)
 {
 	t_node	*node_first;
@@ -30,6 +35,12 @@ void	swap_stack(t_stack *stack)
 	stack->top = node_second;
 }
 
+/*
+	This function sets node as the top of the stack.
+	Params:
+		stack: stack.
+		node: node.
+*/
 void	set_stack_top(t_stack *stack, t_node *node)
 {
 	node->prev = NULL;
@@ -42,6 +53,11 @@ void	set_stack_top(t_stack *stack, t_node *node)
 	++(stack->size);
 }
 
+/*
+	This function removes the top of the stack and sets the next.
+	Params:
+		stack: stack.
+*/
 void	remove_stack_top(t_stack *stack)
 {
 	stack->top = stack->top->next;
@@ -52,6 +68,12 @@ void	remove_stack_top(t_stack *stack)
 	--(stack->size);
 }
 
+/*
+	This function sets node as the bot of the stack.
+	Params:
+		stack: stack.
+		node: node.
+*/
 void	set_stack_bot(t_stack *stack, t_node *node)
 {
 	node->next = NULL;
@@ -64,6 +86,11 @@ void	set_stack_bot(t_stack *stack, t_node *node)
 	++(stack->size);
 }
 
+/*
+	This function removes the bot of the stack and sets the previous.
+	Params:
+		stack: stack.
+*/
 void	remove_stack_bot(t_stack *stack)
 {
 	stack->bot = stack->bot->prev;
