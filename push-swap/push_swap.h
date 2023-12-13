@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:17:11 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/10 17:10:08 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 02:55:32 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	convert_arg_to_stack(int argc, char **argv, t_stack *a);
 void	check_is_int(char *s);
 void	check_not_dup(int *nums, int index);
 void	simplify_stack(t_stack *a, int *nums, int size);
+int		calc_simplified_num(int *nums, int n, int size);
 void	free_stack(t_stack *stack);
 void	free_nodes(t_node *node);
 void	error_handler(void);
@@ -70,7 +71,7 @@ t_stack	*stack_selector(t_stack *a, t_stack *b, char selected);
 void	reset_stack(t_stack *a, t_stack *b, char selected, char ascending);
 char	*operation_conversor(char *operation, char selected);
 void	execute_moves_simple(t_stack *a, t_stack *b, int moves, char selected);
-char	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n);
+void	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n);
 char	is_sorted(t_stack *stack, char ascending);
 char	eval_sort(int a, int b, char ascending);
 int		get_index_minimum_stack(t_stack *stack);

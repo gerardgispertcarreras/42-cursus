@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:14:37 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/10 13:29:55 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:18:22 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,23 @@ void	reorder(t_stack *a, t_stack *b)
 {
 	int		i;
 	int		moves;
-	char	swap_needed;
 
 	i = b->size;
 	while (--i >= 0)
 	{
 		moves = calc_moves_by_num(b, i);
-		swap_needed = execute_moves_complex(a, b, moves, i);
+		execute_moves_complex(a, b, moves, i);
 		operate(a, b, "pa");
-		if (swap_needed)
+		if (a->size > 2 && a->top->value > a->top->next->value)
 		{
 			operate(a, b, "sa");
 			--i;
+		}
+		if (a->bot->value < a->top->value)
+		{
+			operate(a, b, "rra");
+			if (a->top->value == a->top->next->value - 1)
+				--i;
 		}
 	}
 }

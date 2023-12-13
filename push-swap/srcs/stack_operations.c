@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:20:11 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/10 14:04:11 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 02:35:44 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	swap_stack(t_stack *stack)
 	node_first->next = node_third;
 	node_second->prev = NULL;
 	stack->top = node_second;
+	if (stack->size == 2)
+		stack->bot = node_first;
 }
 
 /*

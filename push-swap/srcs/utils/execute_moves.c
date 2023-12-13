@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:23:55 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/10 16:51:33 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:18:30 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,19 @@ void	execute_moves_simple(t_stack *a, t_stack *b, int moves, char selected)
 		moves: number of moves.
 		n: number it is searching.
 */
-char	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n)
+void	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n)
 {
-	char	swap_needed;
 	char	*operation;
 	int		direction;
 
-	swap_needed = 0;
 	decide_move_flow(moves, &direction, &operation, 'b');
 	while (moves != 0)
 	{
-		if (b->top->value == (n - 1))
+		if (b->top->value == (n - 1) || b->top->value == (n - 2))
 		{
 			operate(a, b, "pa");
-			swap_needed = 1;
+			if (a->size > 1 && a->top->value == (n - 2))
+				operate(a, b, "ra");
 			if (direction == -1)
 				moves += direction;
 		}
@@ -68,5 +67,4 @@ char	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n)
 		}
 	}
 	free(operation);
-	return (swap_needed);
 }
