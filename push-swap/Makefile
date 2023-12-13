@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 19:40:22 by ggispert          #+#    #+#              #
-#    Updated: 2023/12/10 12:53:15 by ggispert         ###   ########.fr        #
+#    Updated: 2023/12/13 21:52:58 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,15 +24,13 @@ HEADER = push_swap.h
 LIBFT_PATH = $(CURDIR)/Libft
 LIBFT = ft
 CFLAGS = -Wall -Werror -Wextra -g -O0
-# Add the AddressSanitizer flag
-ASAN_FLAGS = -fsanitize=address
 
 all:
 	@$(MAKE) $(NAME)
 	
 $(NAME): $(SRCS) $(LIBFT)
 	@echo "Compiling $@"
-	@$(CC) $(CFLAGS) $(ASAN_FLAGS) $(SRCS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT)
+	@$(CC) $(CFLAGS) $(SRCS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT)
 
 $(LIBFT):
 	$(MAKE) -C Libft

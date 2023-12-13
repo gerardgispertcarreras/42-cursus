@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:14:37 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/13 15:18:22 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:50:21 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,10 @@ void	reorder(t_stack *a, t_stack *b)
 			operate(a, b, "sa");
 			--i;
 		}
-		if (a->bot->value < a->top->value)
+		while (a->bot->value == a->top->value - 1)
 		{
 			operate(a, b, "rra");
-			if (a->top->value == a->top->next->value - 1)
-				--i;
+			--i;
 		}
 	}
 }

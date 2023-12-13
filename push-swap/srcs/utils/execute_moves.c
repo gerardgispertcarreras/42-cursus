@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 13:23:55 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/13 15:18:30 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:50:04 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ void	execute_moves_complex(t_stack *a, t_stack *b, int moves, int n)
 {
 	char	*operation;
 	int		direction;
+	int		max;
 
 	decide_move_flow(moves, &direction, &operation, 'b');
-	while (moves != 0)
+	max = a->size + b->size - 1;
+	while (b->top->value != n)
 	{
-		if (b->top->value == (n - 1) || b->top->value == (n - 2))
+		if (a->bot && (b->top->value > a->bot->value || a->bot->value == max))
 		{
 			operate(a, b, "pa");
-			if (a->size > 1 && a->top->value == (n - 2))
+			if (a->size > 1 && a->top->value < (n - 1))
 				operate(a, b, "ra");
 			if (direction == -1)
 				moves += direction;
