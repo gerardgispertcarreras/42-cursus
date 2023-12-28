@@ -6,49 +6,80 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:34:58 by ggispert          #+#    #+#             */
-/*   Updated: 2023/10/21 19:28:37 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:43:23 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	ft_error()
+/*
+	This function converts the arguments to a stack. It checks all
+	the errors and simplifies the numbers.
+	Params:
+		argc: number size.
+		argv: number list.
+		a: stack a.
+*/
+void	convert_arg_to_stack(int argc, char **argv, t_stack *a)
 {
-	ft_putstr_fd("Error\n", 1);
-	exit(0);
+	int	*nums;
+	int	i;
+
+	i = 1;
+	nums = malloc((argc - 1) * sizeof(int));
+	if (nums == NULL)
+		exit(0);
+	while (i < argc)
+	{
+		check_is_int(argv[i]);
+		nums[i - 1] = ft_atoi(argv[i]);
+		check_not_dup(nums, i - 1);
+		++i;
+	}
+	simplify_stack(a, nums, argc - 1);
+	free(nums);
 }
 
-//Check if the string is an int
-void check_is_int(char *s)
+/*
+	This function checks if a s is an int.
+	Params:
+		s: string.
+*/
+void	check_is_int(char *s)
 {
-	int	i;
-	int signum;
-	long num;
+	int		i;
+	int		sig;
+	long	num;
 
-	if (s[0] == '\0')
-		ft_error();
 	i = 0;
-	signum = 1;
+	sig = 1;
 	if (s[i] == '-' || s[i] == '+')
 	{
 		if (s[i] == '-')
-			signum = -1;
+			sig = -1;
 		++i;
 	}
+	if (s[i] == '\0')
+		error_handler();
 	num = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] < '0' || s[i] > '9' || i > 11)
-			ft_error();
+			error_handler();
 		num *= 10;
-		num += signum * (s[i] - '0');
+		num += sig * (s[i] - '0');
 		++i;
 	}
-	if ((signum == 1 && num > 2147483647) || (signum == -1 && num < -2147483648))
-		ft_error();
+	if ((sig == 1 && num > 2147483647) || (sig == -1 && num < -2147483648))
+		error_handler();
 }
 
-//check the number in the index is not already on another position before
+/*
+	This function checks if the number in nums[index] is duplicated before it.
+	Params:
+		nums: number list.
+		index: position of the number to check.
+*/
 void	check_not_dup(int *nums, int index)
 {
 	int	i;
@@ -57,48 +88,64 @@ void	check_not_dup(int *nums, int index)
 	while (i < index)
 	{
 		if (nums[i] == nums[index])
-			ft_error();
+			error_handler();
 		++i;
 	}
 }
 
-//Convert the numbers to a simplification of its relative positions starting by 0 ([123, 4, 80] -> [2, 0, 1])
-void	simplify_stack(t_stack *A, int *nums, int size)
+/*
+	This function simplifies the number list into the stack as 0..size - 1.
+	Params:
+		stack: stack.
+		nums: number list.
+		size: size of the number list.
+*/
+void	simplify_stack(t_stack *stack, int *nums, int size)
 {
-	int	i;
-	int	j;
-	
+	int		i;
+	t_node	*node_current;
+	t_node	*node_prev;
+
+	node_current = malloc(sizeof(t_node));
+	if (node_current == NULL)
+		exit(0);
+	stack->top = node_current;
+	node_current->value = calc_simplified_num(nums, nums[0], size);
+	node_current->prev = NULL;
 	i = 0;
-	while (i < size)
+	while (++i < size)
 	{
-		j = 0;
-		A->values[i] = i;
-		++A->size;
-		while (j < i)
-		{
-			if (nums[i] < nums[j])
-			{
-				--A->values[i];
-				++A->values[j];
-			}
-			++j;
-		}
-		++i;
+		node_prev = node_current;
+		node_current = malloc(sizeof(t_node));
+		if (node_current == NULL)
+			exit(0);
+		node_prev->next = node_current;
+		node_current->value = calc_simplified_num(nums, nums[i], size);
+		node_current->prev = node_prev;
 	}
+	node_current->next = NULL;
+	stack->bot = node_current;
+	stack->size = size;
 }
 
-void	convert_arg_to_stack(int argc, char **argv, t_stack *A)
+/*
+	This function simiplifies a number based on the number list.
+	Params:
+		nums: numbers list.
+		n: number to simplify.
+		size: size of the number list.
+*/
+int	calc_simplified_num(int *nums, int n, int size)
 {
-	int	nums[argc - 1]; //array of numbers from the stack
 	int	i;
+	int	simplified_n;
 
-	i = 1;
-	while (i < argc)
+	i = -1;
+	simplified_n = 0;
+	while (++i < size)
 	{
-		check_is_int(argv[i]);
-		nums[i - 1] = ft_atoi(argv[i]); //add the arg to the array
-		check_not_dup(nums,  i - 1); 
-		++i;
+		if (nums[i] < n)
+			++simplified_n;
 	}
-	simplify_stack(A, nums, argc - 1);
+	return (simplified_n);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   eval_sort.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 20:01:30 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/14 02:02:32 by ggispert         ###   ########.fr       */
+/*   Created: 2023/12/09 13:29:59 by ggispert          #+#    #+#             */
+/*   Updated: 2023/12/10 12:45:30 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../push_swap.h"
 
-void	ft_bzero(void *s, size_t n)
+/*
+	This function checks if 2 numbers are sorted.
+	Params:
+		a: first number.
+		b: second number.
+		ascending: if the sorting has to be ascending, 1. 0 otherwise.
+*/
+char	eval_sort(int a, int b, char ascending)
 {
-	size_t	i;
-	char	*s2;
-
-	s2 = (char *)s;
-	i = 0;
-	while (i < n)
-	{
-		s2[i] = 0;
-		++i;
-	}
+	if (ascending)
+		return (a < b);
+	return (a > b);
 }

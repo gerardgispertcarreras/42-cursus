@@ -6,40 +6,32 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 13:59:46 by ggispert          #+#    #+#             */
-/*   Updated: 2023/10/22 13:32:08 by ggispert         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:01:38 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	push_swap(t_stack *A, t_stack *B)
+/*
+	This function decides the algorithm to use by size.
+	Params:
+		a: stack a. (all the number list)
+		b: stack b. (empty)
+*/
+void	push_swap(t_stack *a, t_stack *b)
 {
-	int	i;
-	int	sentinel;
-	int	pivot;
-	int pivot2;
-
-	i = 4;
-	while (i > 0)
-	{
-		sentinel = -1;
-		pivot = A->size / i + B->size;
-		pivot2 = A->size / (i * 2) + B->size;
-		while (A->size != 0 && A->values[0] != sentinel)
-		{
-			if (A->values[0] < pivot)
-			{
-				operate(A, B, "pb");
-				if (B->values[0] < pivot2)
-					operate(A, B, "rb");
-			}
-			else
-			{
-				if (sentinel == -1)
-					sentinel = A->values[0];
-				operate(A, B, "ra");
-			}
-		}
-		--i;	
-	}
+	if (is_sorted(a, 1))
+		reset_stack(a, b, 'a', 1);
+	else if (a->size <= 8)
+		algorithm_simple(a, b);
+	else if (a->size <= 12)
+		algorithm_complex(a, b, 1);
+	else if (a->size <= 50)
+		algorithm_complex(a, b, 2);
+	else if (a->size <= 200)
+		algorithm_complex(a, b, 4);
+	else if (a->size <= 1100)
+		algorithm_complex(a, b, 8);
+	else
+		algorithm_complex(a, b, 20);
 }
