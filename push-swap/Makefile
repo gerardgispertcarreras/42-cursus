@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 19:40:22 by ggispert          #+#    #+#              #
-#    Updated: 2023/12/13 21:52:58 by ggispert         ###   ########.fr        #
+#    Updated: 2023/12/14 09:35:15 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,23 +20,34 @@ SRCS = srcs/main.c srcs/convert_arg_to_stack.c srcs/init_finish.c \
 			 srcs/utils/is_sorted.c srcs/utils/operation_conversor.c \
 			 srcs/utils/reset_stack.c srcs/utils/split_num.c \
 			 srcs/utils/stack_selector.c
+OBJS = $(SRCS:%.c=%.o)
 HEADER = push_swap.h
 LIBFT_PATH = $(CURDIR)/Libft
 LIBFT = ft
-CFLAGS = -Wall -Werror -Wextra -g -O0
+CFLAGS = -Wall -Werror -Wextra 
+
+%.o : %.c $(HEADER)
+	@echo "Compiling $@"
+	@$(CC) $(CFLAGS) $< -c -o $@
 
 all:
-	@$(MAKE) $(NAME)
-	
-$(NAME): $(SRCS) $(LIBFT)
-	@echo "Compiling $@"
-	@$(CC) $(CFLAGS) $(SRCS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT)
+	@$(MAKE) -C Libft -s
+	@$(MAKE) $(NAME) -s
 
-$(LIBFT):
-	$(MAKE) -C Libft
+$(NAME): $(OBJS) $(LIBFT_PATH)/lib$(LIBFT).a
+	@echo "Compiling $@"
+	@$(CC) $(CFLAGS) $(OBJS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT)
 
 clean:
-	$(MAKE) -C Libft fclean
-	rm -rf srcs/*.o
+	$(MAKE) -C Libft fclean -s
+	@find srcs -type f -name "*.o" -exec rm -f {} \;
+	@find srcs -type f -name "*.d" -exec rm -f {} \;
 
-.PHONY: all
+fclean:
+	$(MAKE) clean -s
+	rm -f $(NAME)
+
+re:	
+	$(MAKE) fclean all -s
+
+.PHONY: all clean fclean re
