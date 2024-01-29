@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:54:08 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:19:31 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:09:23 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
 // Buffer size to read files
 # define BUFFER_SIZE 4096
 
-void	pipex(char **argv);
+void	pipex(char **argv, char **envp);
 
 #endif

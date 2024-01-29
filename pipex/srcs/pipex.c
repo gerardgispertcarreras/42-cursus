@@ -6,52 +6,99 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:40:49 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:19:40 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void pipex(char **argv)
+int _open(char *file, char wr)
 {
+	int fd;
+
+	if (wr)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else
+		fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		perror(NULL);
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
+}
+
+void _close(int fd)
+{
+	int close_value;
+
+	close_value = close(fd);
+	if (close_value < 0)
+	{
+		perror(NULL);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void exec_command(char *cmd, int input_fd, int output_fd)
+{
+	dup2(input_fd, STDIN_FILENO);
+	dup2(output_fd, STDOUT_FILENO);
+	_close(input_fd);
+	_close(output_fd);
+	char *cmd_args[] = {"sh", "-c", cmd, NULL};
+	execve("/bin/sh", cmd_args, NULL);
+	exit(EXIT_FAILURE);
+}
+
+void pipex(char **argv, char **envp)
+{
+	(void) envp;
 	int input_file_fd;
 	int output_file_fd;
-	int close_value;
+	int pipe_fd[2];
+	int status;
 	// access() before open?
-	input_file_fd = open(argv[1], O_RDONLY);
-	if (input_file_fd < 0)
+	// Use WIFEXITSTATUS
+	// Maybe open the files in the parent process before the fork?
+	pipe(pipe_fd);
+	int pid = fork();
+	if (pid > 0)
 	{
-		perror(NULL);
-		exit(EXIT_FAILURE);
-	}
-	output_file_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (output_file_fd < 0)
-	{
-		perror(NULL);
-		exit(EXIT_FAILURE);
-	}
-	dup2(input_file_fd, STDIN_FILENO);
-	dup2(output_file_fd, STDOUT_FILENO);
-	int pid = 1;
-	for (int i = 2; i < 4 && pid != 0; ++i)
-	{
-		pid = fork();
-		if (pid == 0)
+		_close(pipe_fd[1]);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
 		{
-			write(2, "Child process\n", 14);
-			char *args[] = {"sh", "-c", argv[i], NULL};
-			char *envp[] = {NULL};
-			execve("/bin/sh", args, envp);
+			if (WEXITSTATUS(status) == EXIT_SUCCESS)
+			{
+				ft_printf("Child process terminated successfully\n");
+				if (!access(argv[4], F_OK))
+					ft_printf("Command %s not exists.\n", argv[4]);
+				else
+				{
+					output_file_fd = _open(argv[4], 1);
+					exec_command(argv[3], pipe_fd[0], output_file_fd);
+				}
+			}
+			else
+			{
+				ft_printf("Child process terminated with failure\n");
+			}
+		}
+		else
+		{
+			ft_printf("Child process terminated abnormally\n");
 		}
 	}
-	if (pid != 0)
+	else if (pid == 0)
 	{
-		waitpid(pid, NULL, 0);
-		close_value = close(output_file_fd);
-		if (close_value == -1)
-		{
-			ft_printf("Failure while closing\n");
-			exit(EXIT_FAILURE);
-		}
+		input_file_fd = _open(argv[1], 0);
+		_close(pipe_fd[0]);
+		exec_command(argv[2], input_file_fd, pipe_fd[1]);
+	}
+	else
+	{
+		ft_printf("Failure while forking\n");
+		exit(EXIT_FAILURE);
 	}
 }

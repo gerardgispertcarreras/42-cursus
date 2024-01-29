@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 23:47:03 by ggispert          #+#    #+#              #
-#    Updated: 2023/12/29 12:38:33 by ggispert         ###   ########.fr        #
+#    Updated: 2024/01/24 19:33:39 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS = $(SRCS:%.c=%.o)
 HEADER = pipex.h
 LIBFT_PATH = $(CURDIR)/Libft
 LIBFT = ft
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -O0
 RM = rm -rf
 
 %.o : %.c $(HEADER)

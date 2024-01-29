@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:53:59 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/23 09:57:31 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:09:14 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ For example: ./pipex <input_file> <command1> <command2> <ouput_file>\n");
 	exit(EXIT_FAILURE);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
 	if (argc != 5)
 		ft_usage();
-	pipex(argv);
+	pipex(argv, envp);
 	return (EXIT_SUCCESS);
 }
