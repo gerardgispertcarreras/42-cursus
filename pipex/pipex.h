@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:54:08 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/30 16:36:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:15:03 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@
 # define NEXECVE ": error on execve"
 
 // Function prototypes
-void	pipex(int input_fd, int output_fd, char **commands, char **envp);
+int	pipex(char **argv, char **envp);
 void	exec_child(int input_fd, int output_fd, char *command, char **envp);
-void	exec_first_child(char **argv, char **envp, int pipe_fd[2]);
-void	exec_second_child(char **argv, char **envp, int pipe_fd[2]);
+void	exec_first_child(char *input_file, int pipe_fd[2], char *command, char **envp);
+void	exec_second_child(char *output_file, int pipe_fd[2], char *command, char **envp);
 void	ft_usage(void);
 int		_open(char *file, char wr);
 void	_close(int fd);
 char	*get_path(char **envp);
 void	add_slash(char ***path);
 void	ft_error(char *source, char *additional_info);
+void	ft_custom_error(int exit_code, char *source, char *reason, char *additional_info);
 
 #endif

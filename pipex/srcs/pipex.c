@@ -6,36 +6,20 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/30 16:11:58 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:53:35 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	ft_usage()
-{
-	ft_printf("ERROR: Bad Usage\nYou should call the function with 2 commands and 2 files.\n\
-For example: ./pipex <input_file> <command1> <command2> <ouput_file>\n");
-	exit(EXIT_FAILURE);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	int input_file_fd;
-	int output_file_fd;
-
-	input_file_fd = _open(argv[1], 0);
-	output_file_fd = _open(argv[4], 1);
 	if (argc != 5)
-		ft_usage();
-	argv[argc - 1] = NULL;
-	pipex(input_file_fd, output_file_fd, &argv[2], envp);
-	_close(input_file_fd);
-	_close(output_file_fd);
-	return (EXIT_SUCCESS);
+		ft_error(PIPEX, INARG);
+	return(pipex(argv, envp));
 }
 
-void pipex(int input_fd, int output_fd, char **commands, char **envp)
+int	pipex(char **argv, char **envp)
 {
 	int	pipe_fd[2];
 	int	status;
@@ -43,29 +27,23 @@ void pipex(int input_fd, int output_fd, char **commands, char **envp)
 	int	second_child;
 	// access() before open?
 	//Check for different file permissions
-	pipe(pipe_fd);
+	if (pipe(pipe_fd) == -1)
+		ft_error(PIPEX, NULL);
 	first_child = fork();
-	if (first_child < 0)
-		exit(EXIT_FAILURE);
+	if (first_child == -1)
+		ft_error(PIPEX, NULL);
 	if (first_child == 0)
-	{
-		_close(pipe_fd[0]);
-		_close(output_fd);
-		exec_child(input_fd, pipe_fd[1], commands[0], envp);
-	}
+		exec_first_child(argv[1], pipe_fd, argv[2], envp);
 	second_child = fork();
-	if (second_child < 0)
-		exit(EXIT_FAILURE);
+	if (second_child == -1)
+		ft_error(PIPEX, NULL);
 	if (second_child == 0)
-	{
-		_close(pipe_fd[1]);
-		_close(input_fd);
-		exec_child(pipe_fd[0], output_fd, commands[1], envp);
-	}
+		exec_second_child(argv[4], pipe_fd, argv[3], envp);
 	_close(pipe_fd[0]);
 	_close(pipe_fd[1]);
 	waitpid(first_child, &status, 0);
 	waitpid(second_child, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 void exec_child(int input_fd, int output_fd, char *command, char **envp)
@@ -78,82 +56,41 @@ void exec_child(int input_fd, int output_fd, char *command, char **envp)
 	dup2(output_fd, STDOUT_FILENO);
 	_close(input_fd);
 	_close(output_fd);
-	path = ft_split(get_path(envp), ':');
+	path = ft_split(get_path(envp), ':'); //CHECK ERROR
 	add_slash(&path);
-	cmd_args = ft_split(command, ' ');
-	while (*path)
+	cmd_args = ft_split(command, ' '); //CHECK ERROR
+	while (path && *path)
 	{
-		cmd = ft_strjoin(*path, cmd_args[0]);
+		cmd = ft_strjoin(*path, cmd_args[0]); //CHECK ERROR
 		execve(cmd, cmd_args, envp);
 		free(cmd);
 		++path;
 	}
-	cmd = cmd_args[0];
-	cmd_args[0] = ft_strrchr(cmd_args[0], '/') + 1;
-	execve(cmd, cmd_args, envp);
-	exit(EXIT_FAILURE);
+	if (ft_strchr(command, '/') != NULL)
+	{
+		cmd = cmd_args[0];
+		cmd_args[0] = ft_strrchr(cmd_args[0], '/') + 1;
+		execve(cmd, cmd_args, envp);
+		ft_error(PIPEX, cmd);
+	}
+	else
+		ft_custom_error(127, PIPEX, "command not found", cmd_args[0]);
 }
 
-void exec_first_child(char **argv, char **envp, int pipe_fd[2])
+void exec_first_child(char *input_file, int pipe_fd[2], char *command, char **envp)
 {
 	int		input_file_fd;
-	char	**path;
-	char	*cmd;
-	char	**cmd_args;
 
 	_close(pipe_fd[0]);
-	input_file_fd = _open(argv[1], 0);
-	dup2(input_file_fd, STDIN_FILENO);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	_close(input_file_fd);
-	_close(pipe_fd[1]);
-	path = ft_split(get_path(envp), ':');
-	add_slash(&path);
-	cmd_args = ft_split(argv[2], ' ');
-	while (*path)
-	{
-		cmd = ft_strjoin(*path, cmd_args[0]);
-		execve(cmd, cmd_args, envp);
-		free(cmd);
-		++path;
-	}
-	cmd = cmd_args[0];
-	cmd_args[0] = ft_strrchr(cmd_args[0], '/') + 1;
-	write(2, cmd_args[0], ft_strlen(cmd_args[0]));
-	// Free memory
-	execve(cmd, cmd_args, envp);
-	// free(cmd);
-	// free(cmd_args);
-	// free(path);
-	exit(EXIT_FAILURE);
+	input_file_fd = _open(input_file, 0);
+	exec_child(input_file_fd, pipe_fd[1], command, envp);
 }
 
-void exec_second_child(char **argv, char **envp, int pipe_fd[2])
+void exec_second_child(char *output_file, int pipe_fd[2], char *command, char **envp)
 {
 	int		output_file_fd;
-	char	**path;
-	char	*cmd;
-	char	**cmd_args;
 
 	_close(pipe_fd[1]);
-	output_file_fd = _open(argv[4], 1);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(output_file_fd, STDOUT_FILENO);
-	_close(pipe_fd[0]);
-	_close(output_file_fd);
-	path = ft_split(get_path(envp), ':');
-	add_slash(&path);
-	cmd_args = ft_split(argv[3], ' ');
-	while (*path)
-	{
-		cmd = ft_strjoin(*path, cmd_args[0]);
-		execve(cmd, cmd_args, envp);
-		free(cmd);
-		++path;
-	}
-	cmd = cmd_args[0];
-	cmd_args[0] = ft_strrchr(cmd_args[0], '/');
-	write(2, cmd_args[0], ft_strlen(cmd_args[0]));
-	execve(cmd, cmd_args, envp);
-	exit(EXIT_FAILURE);
+	output_file_fd = _open(output_file, 1);
+	exec_child(pipe_fd[0], output_file_fd, command, envp);
 }
