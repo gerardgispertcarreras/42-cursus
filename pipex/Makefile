@@ -6,12 +6,12 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 23:47:03 by ggispert          #+#    #+#              #
-#    Updated: 2024/01/24 19:33:39 by ggispert         ###   ########.fr        #
+#    Updated: 2024/01/30 17:15:22 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-SRCS = srcs/main.c srcs/pipex.c
+SRCS = srcs/pipex.c srcs/utils.c
 OBJS = $(SRCS:%.c=%.o)
 HEADER = pipex.h
 LIBFT_PATH = $(CURDIR)/Libft
@@ -33,7 +33,7 @@ $(NAME): $(OBJS) $(LIBFT_PATH)/lib$(LIBFT).a
 
 clean:
 	$(MAKE) -C Libft fclean -s
-	@$(RM) OBJS
+	$(RM) $(OBJS)
 
 fclean:
 	$(MAKE) clean -s
