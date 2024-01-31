@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:54:08 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 13:15:03 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:11:58 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	*get_path(char **envp);
 void	add_slash(char ***path);
 void	ft_error(char *source, char *additional_info);
 void	ft_custom_error(int exit_code, char *source, char *reason, char *additional_info);
+char	**ft_split_args(char const *s, char c);
 
 #endif

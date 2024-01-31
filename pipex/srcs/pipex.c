@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 13:53:35 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:09:55 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void exec_child(int input_fd, int output_fd, char *command, char **envp)
 	_close(output_fd);
 	path = ft_split(get_path(envp), ':'); //CHECK ERROR
 	add_slash(&path);
-	cmd_args = ft_split(command, ' '); //CHECK ERROR
+	// ft_putstr_fd(command, 2);
+	cmd_args = ft_split_args(command, ' '); //CHECK ERROR
 	while (path && *path)
 	{
 		cmd = ft_strjoin(*path, cmd_args[0]); //CHECK ERROR

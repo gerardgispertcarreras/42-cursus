@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:53:59 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 14:30:21 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:09:17 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int _open(char *file, char wr)
 
 	// Ha de ser RDWR?
 	if (wr)
-		fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(file, O_RDONLY);
 	if (fd == -1)

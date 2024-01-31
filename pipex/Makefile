@@ -6,12 +6,12 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 23:47:03 by ggispert          #+#    #+#              #
-#    Updated: 2024/01/30 17:15:22 by ggispert         ###   ########.fr        #
+#    Updated: 2024/01/31 16:12:41 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-SRCS = srcs/pipex.c srcs/utils.c
+SRCS = srcs/pipex.c srcs/utils.c srcs/ft_split_args.c
 OBJS = $(SRCS:%.c=%.o)
 HEADER = pipex.h
 LIBFT_PATH = $(CURDIR)/Libft
