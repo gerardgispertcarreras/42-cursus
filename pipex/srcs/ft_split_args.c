@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:41:26 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 18:42:28 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/01 13:19:27 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ size_t	get_word_count_args(char const *s, char c)
 		{
 			quote_type = s[j];
 			++j;
-			while (s[j] != quote_type && s[j] != '\0')
+			while ((s[j] != quote_type && s[j] != '\0') || (s[j] == quote_type && s[j - 1] == '\\'))
 				++j;
 		}
 		++j;
@@ -81,7 +81,7 @@ int	concat_strings(char **p, char const *s)
 	else
 		end = ' ';
 	i = 1;
-	while (s[i] != end && s[i] != '\0')
+	while ((s[i] != end && s[i] != '\0') || (s[i] == end && s[i - 1] == '\\'))
 		++i;
 	if (*p == NULL)
 		tmp = "";
@@ -94,6 +94,8 @@ int	concat_strings(char **p, char const *s)
 		*p = ft_strjoin(tmp, ft_substr(s, 1, i - 1));
 		++i;
 	}
+	*p = ft_strtrim(*p, "\\");
+	ft_putendl_fd(*p, 2);
 	return (i);
 }
 
@@ -108,6 +110,7 @@ char	**ft_split_args(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	t = get_word_count_args(s, c);
+	ft_putendl_fd(ft_itoa(t), 2);
 	p = malloc((t + 1) * sizeof(char *));
 	if (p == NULL)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:54:08 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 16:11:58 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:58:50 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,10 @@
 # include <stdio.h>
 # include <sys/wait.h>
 
-# define BASH "bash: "
 # define PIPEX "pipex: "
-# define COPEN ": can not open the file: "
-# define CNF ": command not found"
-# define CCLOSE ": Fd can not be closed"
-# define PERM ": Permission denied"
-# define BFD ": Bad file descriptor"
-# define EFORK ": error creating fork"
-# define NFILEDIR "no such file or directory: "
-# define INARG ": Invalid number of arguments"
-# define MALLOCER ": error trying to allocate memory"
-# define NEXECVE ": error on execve"
+# define CNF "command not found"
+# define INARG "Invalid number of arguments"
+
 
 // Function prototypes
 int	pipex(char **argv, char **envp);
@@ -41,7 +33,7 @@ int		_open(char *file, char wr);
 void	_close(int fd);
 char	*get_path(char **envp);
 void	add_slash(char ***path);
-void	ft_error(char *source, char *additional_info);
+void	ft_error(int exit_code, char *source, char *additional_info);
 void	ft_custom_error(int exit_code, char *source, char *reason, char *additional_info);
 char	**ft_split_args(char const *s, char c);
 

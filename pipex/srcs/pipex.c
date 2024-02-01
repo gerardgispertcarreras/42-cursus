@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 17:09:55 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:58:42 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
-		ft_error(PIPEX, INARG);
+		ft_custom_error(EXIT_FAILURE, PIPEX, INARG, NULL); //CHECK ERROR
 	return(pipex(argv, envp));
 }
 
@@ -28,15 +28,15 @@ int	pipex(char **argv, char **envp)
 	// access() before open?
 	//Check for different file permissions
 	if (pipe(pipe_fd) == -1)
-		ft_error(PIPEX, NULL);
+		ft_error(EXIT_FAILURE, PIPEX, NULL);
 	first_child = fork();
 	if (first_child == -1)
-		ft_error(PIPEX, NULL);
+		ft_error(EXIT_FAILURE, PIPEX, NULL);
 	if (first_child == 0)
 		exec_first_child(argv[1], pipe_fd, argv[2], envp);
 	second_child = fork();
 	if (second_child == -1)
-		ft_error(PIPEX, NULL);
+		ft_error(EXIT_FAILURE, PIPEX, NULL);
 	if (second_child == 0)
 		exec_second_child(argv[4], pipe_fd, argv[3], envp);
 	_close(pipe_fd[0]);
@@ -58,24 +58,24 @@ void exec_child(int input_fd, int output_fd, char *command, char **envp)
 	_close(output_fd);
 	path = ft_split(get_path(envp), ':'); //CHECK ERROR
 	add_slash(&path);
-	// ft_putstr_fd(command, 2);
 	cmd_args = ft_split_args(command, ' '); //CHECK ERROR
-	while (path && *path)
+	if (ft_strchr(cmd_args[0], '/') != NULL)
+	{
+		cmd = cmd_args[0];
+		cmd_args[0] = ft_strrchr(cmd_args[0], '/') + 1;
+		execve(cmd, cmd_args, envp);
+		if (access(cmd, X_OK))
+			ft_error(126, PIPEX, cmd);
+		ft_error(EXIT_FAILURE, PIPEX, cmd);
+	}
+	while (*path)
 	{
 		cmd = ft_strjoin(*path, cmd_args[0]); //CHECK ERROR
 		execve(cmd, cmd_args, envp);
 		free(cmd);
 		++path;
 	}
-	if (ft_strchr(command, '/') != NULL)
-	{
-		cmd = cmd_args[0];
-		cmd_args[0] = ft_strrchr(cmd_args[0], '/') + 1;
-		execve(cmd, cmd_args, envp);
-		ft_error(PIPEX, cmd);
-	}
-	else
-		ft_custom_error(127, PIPEX, "command not found", cmd_args[0]);
+	ft_custom_error(127, PIPEX, CNF, cmd_args[0]);
 }
 
 void exec_first_child(char *input_file, int pipe_fd[2], char *command, char **envp)
