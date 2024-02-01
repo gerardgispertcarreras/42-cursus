@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/01 12:58:42 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:12:57 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ int	pipex(char **argv, char **envp)
 	return (WEXITSTATUS(status));
 }
 
+void print_args(char **args)
+{
+	int i;
+
+	i = 0;
+	while (args[i])
+	{
+		ft_putendl_fd(args[i], 2);
+		++i;
+	}
+}
+
 void exec_child(int input_fd, int output_fd, char *command, char **envp)
 {
 	char	**path;
@@ -58,7 +70,7 @@ void exec_child(int input_fd, int output_fd, char *command, char **envp)
 	_close(output_fd);
 	path = ft_split(get_path(envp), ':'); //CHECK ERROR
 	add_slash(&path);
-	cmd_args = ft_split_args(command, ' '); //CHECK ERROR
+	cmd_args = ft_split_args(command); //CHECK ERROR
 	if (ft_strchr(cmd_args[0], '/') != NULL)
 	{
 		cmd = cmd_args[0];

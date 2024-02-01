@@ -6,43 +6,94 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:41:26 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/01 13:19:27 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:13:08 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-size_t	get_word_count_args(char const *s, char c)
+// int	get_quote_length(char const *s)
+// {
+// 	int		i;
+// 	char	quote_type;
+
+// 	i = 1;
+// 	quote_type = s[0];
+// 	while (s[i] != quote_type)
+// 		++i;
+// 	if (ft_escaped(s, i))
+// 		i += get_quote_length(s + i);
+// 	return (i);
+// }
+
+char is_escaped(char const *s, int i)
 {
-	size_t	i;
-	size_t	j;
-	char	quote_type;
+	int j;
+	int escaped;
+
+	j = i;
+	escaped = 0;
+	while (j > 0 && s[j - 1] == '\\')
+	{
+		escaped = !escaped;
+		--j;
+	}
+	return (escaped);
+}
+
+int get_single_quote_length(char const *s)
+{
+	int i;
+
+	i = 1;
+	while (s[i] != '\'')
+		++i;
+	return (i);
+}
+
+int get_double_quote_length(char const *s)
+{
+	int i;
+
+	i = 1;
+	while (s[i] != '\"')
+	{
+		if (s[i] == '\\')
+			++i;
+		++i;
+	}
+	return (i);
+}
+
+size_t get_word_count_args(char const *s)
+{
+	size_t i;
+	size_t j;
 
 	i = 0;
 	j = 0;
 	while (s[j] != '\0')
 	{
-		if (s[j] != c)
+		if (s[j] != ' ')
 		{
-			if (j == 0 || s[j - 1] == c)
+			if (j == 0 || (s[j - 1] == ' ' && !is_escaped(s, j - 1)))
 				++i;
 		}
-		if (s[j] == '\'' || s[j] == '\"')
-		{
-			quote_type = s[j];
+		if (s[j] == '\\')
 			++j;
-			while ((s[j] != quote_type && s[j] != '\0') || (s[j] == quote_type && s[j - 1] == '\\'))
-				++j;
-		}
+		else if (s[j] == '\'')
+			j += get_single_quote_length(s + j);
+		else if (s[j] == '\"')
+			j += get_double_quote_length(s + j);
 		++j;
 	}
 	return (i);
 }
 
-long	get_word_length_args(char const *s, char c)
+long get_word_length_args(char const *s, char c)
 {
-	long	i;
-	char	quote_type;
+	long i;
+	char quote_type;
 
 	i = 0;
 	quote_type = '\0';
@@ -60,7 +111,7 @@ long	get_word_length_args(char const *s, char c)
 	return (i);
 }
 
-char	**check_split_args(char a, long i, char **p)
+char **check_split_args(char a, long i, char **p)
 {
 	if (!a)
 		return (p);
@@ -70,66 +121,82 @@ char	**check_split_args(char a, long i, char **p)
 	return (NULL);
 }
 
-int	concat_strings(char **p, char const *s)
+char *ft_check_escaped(char *s)
 {
-	int		i;
-	char	*tmp;
-	char	end;
+	int i;
 
-	if ((s[0] == '\'' || s[0] == '\"'))
-		end = s[0];
-	else
-		end = ' ';
-	i = 1;
-	while ((s[i] != end && s[i] != '\0') || (s[i] == end && s[i - 1] == '\\'))
-		++i;
-	if (*p == NULL)
-		tmp = "";
-	else
-		tmp = *p;
-	if (end == ' ')
-		*p = ft_strjoin(tmp, ft_substr(s, 0, i));
-	else
+	i = 0;
+	while (s[i] != '\0')
 	{
-		*p = ft_strjoin(tmp, ft_substr(s, 1, i - 1));
+		if (s[i] == '\\')
+		{
+			ft_strlcpy(s + i, s + i + 1, ft_strlen(s + i + 1) + 1);
+		}
 		++i;
 	}
-	*p = ft_strtrim(*p, "\\");
-	ft_putendl_fd(*p, 2);
+	return (s);
+}
+
+int concat_strings(char **p, char const *s)
+{
+	int i;
+
+	if (*p == NULL)
+		*p = ft_strdup("");
+	if (s[0] == '\'')
+	{
+		i = get_single_quote_length(s) + 1;
+		*p = ft_strjoin(*p, ft_substr(s, 1, i - 2));
+	}
+	else if (s[0] == '\"')
+	{
+		i = get_double_quote_length(s) + 1;
+		*p = ft_strjoin(*p, ft_check_escaped(ft_substr(s, 1, i - 2)));
+	}
+	else
+	{
+		i = 0;
+		while (s[i] != ' ' && s[i] != '\0' && s[i] != '\'' && s[i] != '\"')
+		{
+			if (s[i] == '\\')
+			{
+				*p = ft_strjoin(*p, ft_substr(s, 0, i));
+				*p = ft_strjoin(*p, ft_substr(s, i + 1, 1));
+				return (i + 2);
+			}
+			++i;
+		}
+		*p = ft_strjoin(*p, ft_substr(s, 0, i));
+	}
 	return (i);
 }
 
-char	**ft_split_args(char const *s, char c)
+char **ft_split_args(char const *s)
 {
-	long	t;
-	long	i;
-	size_t	j;
-	// size_t	len;
-	char	**p;
+	long total_words;
+	long word_iterator;
+	size_t j;
+	char **p;
 
 	if (s == NULL)
 		return (NULL);
-	t = get_word_count_args(s, c);
-	ft_putendl_fd(ft_itoa(t), 2);
-	p = malloc((t + 1) * sizeof(char *));
+	total_words = get_word_count_args(s);
+	p = malloc((total_words + 1) * sizeof(char *));
 	if (p == NULL)
-		return (NULL);
-	i = 0;
+		return (NULL); // exit
+	word_iterator = 0;
 	j = 0;
-	while (i < t)
+	while (word_iterator < total_words)
 	{
-		p[i] = NULL;
-		while (s[j] == c)
+		p[word_iterator] = NULL;
+		while (s[j] == ' ')
 			++j;
-		while(s[j] != c && s[j] != '\0')
-			j += concat_strings(&p[i], s + j);
-		// if (len > 0)
-		// 	p[i++] = ft_substr(s, j, len);
-		// if (i > 0 && p[i - 1] == NULL)
-		// 	t = -1;
-		// j += len + 1;
-		++i;
+		while (s[j] != ' ' && s[j] != '\0')
+			j += concat_strings(&p[word_iterator], s + j);
+		// if (word_iterator > 0 && p[word_iterator - 1] == NULL)
+		// 	total_words = -1;
+		++word_iterator;
 	}
-	p[i] = NULL;
-	return (check_split_args(t == -1, i, p));
+	p[word_iterator] = NULL;
+	return (check_split_args(total_words == -1, word_iterator, p));
 }
