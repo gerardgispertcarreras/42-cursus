@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:49 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/01 18:12:57 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/02 03:00:50 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc != 5)
-		ft_custom_error(EXIT_FAILURE, PIPEX, INARG, NULL); //CHECK ERROR
-	return(pipex(argv, envp));
-}
-
-int	pipex(char **argv, char **envp)
-{
 	int	pipe_fd[2];
 	int	status;
 	int	first_child;
 	int	second_child;
-	// access() before open?
-	//Check for different file permissions
+	
+	if (argc != 5)
+		ft_custom_error(EXIT_FAILURE, PIPEX, INARG, NULL); //CHECK ERROR
 	if (pipe(pipe_fd) == -1)
 		ft_error(EXIT_FAILURE, PIPEX, NULL);
 	first_child = fork();
@@ -46,19 +40,7 @@ int	pipex(char **argv, char **envp)
 	return (WEXITSTATUS(status));
 }
 
-void print_args(char **args)
-{
-	int i;
-
-	i = 0;
-	while (args[i])
-	{
-		ft_putendl_fd(args[i], 2);
-		++i;
-	}
-}
-
-void exec_child(int input_fd, int output_fd, char *command, char **envp)
+void	exec_child(int input_fd, int output_fd, char *command, char **envp)
 {
 	char	**path;
 	char	*cmd;
@@ -90,20 +72,38 @@ void exec_child(int input_fd, int output_fd, char *command, char **envp)
 	ft_custom_error(127, PIPEX, CNF, cmd_args[0]);
 }
 
-void exec_first_child(char *input_file, int pipe_fd[2], char *command, char **envp)
+void	exec_first_child(char *input_file, int pipe_fd[2], char *command, char **envp)
 {
-	int		input_file_fd;
+	int	input_file_fd;
 
 	_close(pipe_fd[0]);
 	input_file_fd = _open(input_file, 0);
 	exec_child(input_file_fd, pipe_fd[1], command, envp);
 }
 
-void exec_second_child(char *output_file, int pipe_fd[2], char *command, char **envp)
+void	exec_second_child(char *output_file, int pipe_fd[2], char *command, char **envp)
 {
-	int		output_file_fd;
+	int	output_file_fd;
 
 	_close(pipe_fd[1]);
 	output_file_fd = _open(output_file, 1);
 	exec_child(pipe_fd[0], output_file_fd, command, envp);
+}
+
+char	*get_path(char **envp)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], "PATH=", 5))
+		{
+			path = ft_strdup(envp[i] + 5); //CHECK IF ERROR
+			return (path);
+		}
+		i++;
+	}
+	return ("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 }

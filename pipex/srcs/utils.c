@@ -6,15 +6,15 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:53:59 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/01 12:36:36 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/02 03:02:21 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-int _open(char *file, char wr)
+int	_open(char *file, char wr)
 {
-	int fd;
+	int	fd;
 
 	if (wr)
 	{
@@ -29,59 +29,42 @@ int _open(char *file, char wr)
 	return (fd);
 }
 
-void _close(int fd)
+void	_close(int fd)
 {
-	int close_value;
+	int	close_value;
 
 	close_value = close(fd);
 	if (close_value == -1)
 		ft_error(EXIT_FAILURE, PIPEX, ft_itoa(fd)); //CHECK IF ERROR
 }
 
-char *get_path(char **envp)
+void	add_slash(char ***path)
 {
-	int i;
-	char *path;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], "PATH=", 5))
-		{
-			path = ft_strdup(envp[i] + 5); //CHECK IF ERROR
-			return (path);
-		}
-		i++;
-	}
-	return ("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-}
-
-void add_slash(char ***path)
-{
-	int i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (*path && (*path)[i])
 	{
-		char *tmp = ft_strjoin((*path)[i], "/"); //CHECK IF ERROR
+		tmp = ft_strjoin((*path)[i], "/"); //CHECK IF ERROR
 		free((*path)[i]);
 		(*path)[i] = tmp;
 		i++;
 	}
 }
 
-void	ft_error(int exit_code, char *source, char *additional_info)
+void	ft_error(int exit_code, char *source, char *info)
 {
 	ft_putstr_fd(source, 2);
-	perror(additional_info);
+	perror(info);
 	exit(exit_code);
 }
 
-void	ft_custom_error(int exit_code, char *source, char *reason, char *additional_info)
+void	ft_custom_error(int exit_code, char *source, char *reason, char *info)
 {
 	ft_putstr_fd(source, 2);
-	if (additional_info)
-		ft_putstr_fd(ft_strjoin(additional_info, ": "), 2);
+	if (info)
+		ft_putstr_fd(ft_strjoin(info, ": "), 2);
 	ft_putendl_fd(reason, 2);
 	exit(exit_code);
 }
