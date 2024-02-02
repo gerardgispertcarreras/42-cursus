@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 23:53:59 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/02 03:02:21 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:06:25 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,16 @@ int	_open(char *file, char wr)
 
 void	_close(int fd)
 {
-	int	close_value;
+	int		close_value;
+	char	*fd_string;
 
 	close_value = close(fd);
 	if (close_value == -1)
-		ft_error(EXIT_FAILURE, PIPEX, ft_itoa(fd)); //CHECK IF ERROR
-}
-
-void	add_slash(char ***path)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (*path && (*path)[i])
 	{
-		tmp = ft_strjoin((*path)[i], "/"); //CHECK IF ERROR
-		free((*path)[i]);
-		(*path)[i] = tmp;
-		i++;
+		fd_string = ft_itoa(fd);
+		if (fd_string == NULL)
+			ft_custom_error(EXIT_FAILURE, PIPEX, MALLOCERR, NULL);
+		ft_error(EXIT_FAILURE, PIPEX, fd_string);
 	}
 }
 

@@ -6,17 +6,17 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 23:47:03 by ggispert          #+#    #+#              #
-#    Updated: 2024/02/02 02:57:03 by ggispert         ###   ########.fr        #
+#    Updated: 2024/02/02 15:16:35 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-SRCS = srcs/main.c srcs/utils.c srcs/ft_split_args.c srcs/ft_split_args_utils.c
+SRCS = srcs/main.c srcs/error_utils.c srcs/exec_utils.c srcs/ft_split_args.c srcs/ft_split_args_utils.c
 OBJS = $(SRCS:%.c=%.o)
 HEADER = pipex.h
 LIBFT_PATH = $(CURDIR)/Libft
 LIBFT = ft
-CFLAGS = -Wall -Werror -Wextra -g -O0
+CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 
 %.o : %.c $(HEADER)
