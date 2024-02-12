@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 00:24:37 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 00:29:56 by ggispert         ###   ########.fr       */
+/*   Created: 2023/01/23 18:43:40 by ggispert          #+#    #+#             */
+/*   Updated: 2023/04/29 12:34:16 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fract-ol.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv)
+int	ft_isupper(int c)
 {
-	
+	return (c >= 'A' && c <= 'Z');
 }

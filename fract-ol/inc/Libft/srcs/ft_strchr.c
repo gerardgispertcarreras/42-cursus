@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.h                                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 00:25:16 by ggispert          #+#    #+#             */
-/*   Updated: 2024/01/31 00:29:06 by ggispert         ###   ########.fr       */
+/*   Created: 2023/02/01 20:42:32 by ggispert          #+#    #+#             */
+/*   Updated: 2023/04/29 12:34:16 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACT_OL_H
-# define FRACT_OL_H
-# include "../minilibx-linux/mlx.h"
-// # include "../minilibx_opengl_20191021/mlx.h"
-# include "../libft/libft.h"
-# include <math.h>
+#include "../libft.h"
 
-int	main(int argc, char **argv);
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
 
-#endif
+	i = -1;
+	while (s[++i] != '\0')
+	{
+		if (s[i] == (unsigned char)c)
+			return ((char *)(s + i));
+	}
+	if ((unsigned char)c == '\0')
+		return ((char *)(s + i));
+	return (NULL);
+}
