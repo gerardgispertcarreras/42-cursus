@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:24:37 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/12 11:26:09 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:36:18 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,81 +20,25 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	ft_usage()
-{
-	ft_putstr_fd("Usage: ./fract-ol [mandelbrot | julia]\n", 2);
-	exit(EXIT_FAILURE);
-}
-
-void mandelbrot(t_data *img, int max_iterations)
-{
-	t_cmplx	c;
-	t_cmplx	z;
-	int i;
-	int	x;
-	int y;
-	char diverged;
-	double	tmp;
-
-	x = -1;
-	while (++x < X_SIZE)
-	{
-		y = -1;
-		while (++y < Y_SIZE)
-		{
-			i = 0;
-			z.x = 0.0;
-			z.y = 0.0;
-			c.x = X_MIN + x * ((X_MAX - X_MIN) / X_SIZE);
-			c.y = Y_MIN + y * ((Y_MAX - Y_MIN) / Y_SIZE);
-			diverged = 0;
-			while (++i <= max_iterations && !diverged)
-			{
-				tmp = z.x * z.x - z.y * z.y + c.x;
-				z.y = 2.0 * z.x * z.y + c.y;
-				z.x = tmp;
-				if (z.x * z.x + z.y * z.y > THRESHOLD)
-					diverged = 1;
-			}
-			if (diverged)
-			{
-				if (i < 10)	
-					my_mlx_pixel_put(img, x, y, 0x00FF0000);
-				else if (i < 30)
-					my_mlx_pixel_put(img, x, y, 0xFFFFFFFF);
-				else
-					my_mlx_pixel_put(img, x, y, 0xFFFFFFFF);
-			}
-			else
-				my_mlx_pixel_put(img, x, y, 0x00000000);
-		}
-	}
-}
-
-void	draw_fractal(t_data *img, char *fractal_name)
+void	draw_fractal(t_data *data, char *fractal_name)
 {
 	if (!ft_strncmp(fractal_name, "mandelbrot", 11))
-		mandelbrot(img, 50);
-	else
-	{
-		ft_usage();
-		exit(EXIT_FAILURE);
-	}
+		mandelbrot(data, 50);
 }
 
 int	main(int argc, char **argv)
 {
-	t_vars 	vars;
-	t_data	img;
+	t_fractal 	fractal;
 
-	if (argc != 2)
-		ft_usage();
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, X_SIZE, Y_SIZE, "Hello world!");
-	img.img = mlx_new_image(vars.mlx, X_SIZE, Y_SIZE);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	draw_fractal(&img, argv[1]);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_loop(vars.mlx);
+	check_parameters(argc, argv);
+	fractal.mlx = mlx_init();
+	fractal.win = mlx_new_window(fractal.mlx, X_SIZE, Y_SIZE, "fract-ol");
+	fractal.data = malloc(sizeof(t_data));
+	fractal.data->img = mlx_new_image(fractal.mlx, X_SIZE, Y_SIZE);
+	fractal.data->addr = mlx_get_data_addr(fractal.data->img, &fractal.data->bits_per_pixel, &fractal.data->line_length, 
+								&fractal.data->endian);
+	bind_events(&fractal);
+	draw_fractal(fractal.data, argv[1]);
+	mlx_put_image_to_window(fractal.mlx, fractal.win, fractal.data->img, 0, 0);
+	mlx_loop(fractal.mlx);
 }

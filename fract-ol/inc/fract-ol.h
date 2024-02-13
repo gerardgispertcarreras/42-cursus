@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:25:16 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/12 11:19:34 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:33:48 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@
 # include "minilibx-linux/mlx.h"
 # include "Libft/libft.h"
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
 
 typedef struct	s_data {
 	void	*img;
@@ -39,6 +35,12 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+typedef struct	s_fractal {
+	void	*mlx;
+	void	*win;
+	t_data	*data;
+}				t_fractal;
 
 typedef struct s_cmplx {
 	double	x;
@@ -56,6 +58,16 @@ enum {
 };
 
 int	main(int argc, char **argv);
+
+// Init
+void	usage();
+void	check_parameters(int argc, char **argv);
+void	bind_events(t_fractal *fractal);
+
+// Event Handlers
+int	close_handler(t_fractal *fractal);
+int	key_handler(int keycode, t_fractal *fractal);
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int	create_trgb(int t, int r, int g, int b);
 int	get_t(int trgb);
@@ -63,7 +75,8 @@ int	get_r(int trgb);
 int	get_g(int trgb);
 int	get_b(int trgb);
 
-void	draw_fractal(t_data *img, char *fractal_name);
-void	mandelbrot(t_data *img, int max_iterations);
+// Fractal calculation
+void	draw_fractal(t_data *data, char *fractal_name);
+void	mandelbrot(t_data *data, int max_iterations);
 
 #endif

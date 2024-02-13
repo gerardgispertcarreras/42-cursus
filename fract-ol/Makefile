@@ -6,13 +6,14 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 23:04:59 by ggispert          #+#    #+#              #
-#    Updated: 2024/02/12 11:19:52 by ggispert         ###   ########.fr        #
+#    Updated: 2024/02/13 11:34:46 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fract-ol
 
-SRCS = srcs/fract-ol.c srcs/colors.c
+SRCS = srcs/fract-ol.c srcs/init.c srcs/events.c srcs/mandelbrot.c \
+			 srcs/colors.c
 OBJS = $(SRCS:srcs/%.c=objs/%.o)
 
 SRCSDIR = ./srcs/
@@ -30,7 +31,7 @@ MINILIBX_NAME = mlx
 MINILIBX = $(MINILIBX_PATH)lib$(MINILIBX_NAME).a
 
 CC = cc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -rf
 
