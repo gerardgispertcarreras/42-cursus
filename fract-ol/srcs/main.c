@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:24:37 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/13 11:36:18 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:24:25 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	draw_fractal(t_data *data, char *fractal_name)
+void	draw_fractal(t_fractal *fractal, t_data *data, char *fractal_name)
 {
 	if (!ft_strncmp(fractal_name, "mandelbrot", 11))
-		mandelbrot(data, 50);
+		mandelbrot(fractal, data, 50);
 }
 
 int	main(int argc, char **argv)
@@ -38,7 +38,8 @@ int	main(int argc, char **argv)
 	fractal.data->addr = mlx_get_data_addr(fractal.data->img, &fractal.data->bits_per_pixel, &fractal.data->line_length, 
 								&fractal.data->endian);
 	bind_events(&fractal);
-	draw_fractal(fractal.data, argv[1]);
+	fractal_init(&fractal);
+	draw_fractal(&fractal, fractal.data, argv[1]);
 	mlx_put_image_to_window(fractal.mlx, fractal.win, fractal.data->img, 0, 0);
 	mlx_loop(fractal.mlx);
 }

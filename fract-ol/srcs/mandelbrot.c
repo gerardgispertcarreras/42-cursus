@@ -6,14 +6,15 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:30:17 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/13 11:30:29 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/15 09:10:22 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-void mandelbrot(t_data *data, int max_iterations)
+void mandelbrot(t_fractal *fractal, t_data *data, int max_iterations)
 {
+	(void)max_iterations;
 	t_cmplx	c;
 	t_cmplx	z;
 	int i;
@@ -31,10 +32,10 @@ void mandelbrot(t_data *data, int max_iterations)
 			i = 0;
 			z.x = 0.0;
 			z.y = 0.0;
-			c.x = X_MIN + x * ((X_MAX - X_MIN) / X_SIZE);
-			c.y = Y_MIN + y * ((Y_MAX - Y_MIN) / Y_SIZE);
+			c.x = fractal->x_min + x * ((fractal->x_max - fractal->x_min) / X_SIZE);
+			c.y = fractal->y_min + y * ((fractal->y_max - fractal->y_min) / Y_SIZE);
 			diverged = 0;
-			while (++i <= max_iterations && !diverged)
+			while (++i <= MAX_ITERATIONS && !diverged)
 			{
 				tmp = z.x * z.x - z.y * z.y + c.x;
 				z.y = 2.0 * z.x * z.y + c.y;
@@ -44,12 +45,7 @@ void mandelbrot(t_data *data, int max_iterations)
 			}
 			if (diverged)
 			{
-				if (i < 10)	
-					my_mlx_pixel_put(data, x, y, 0x00FF0000);
-				else if (i < 30)
-					my_mlx_pixel_put(data, x, y, 0xFFFFFFFF);
-				else
-					my_mlx_pixel_put(data, x, y, 0xFFFFFFFF);
+				my_mlx_pixel_put(data, x, y, fractal->colors[i - 1]);
 			}
 			else
 				my_mlx_pixel_put(data, x, y, 0x00000000);

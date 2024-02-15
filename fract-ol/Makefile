@@ -6,13 +6,13 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 23:04:59 by ggispert          #+#    #+#              #
-#    Updated: 2024/02/13 11:34:46 by ggispert         ###   ########.fr        #
+#    Updated: 2024/02/15 08:14:02 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fract-ol
 
-SRCS = srcs/fract-ol.c srcs/init.c srcs/events.c srcs/mandelbrot.c \
+SRCS = srcs/main.c srcs/init.c srcs/events.c srcs/mandelbrot.c \
 			 srcs/colors.c
 OBJS = $(SRCS:srcs/%.c=objs/%.o)
 
