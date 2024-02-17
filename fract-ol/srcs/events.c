@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:22:34 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 12:43:54 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:08:32 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	key_handler(int keycode, t_fractal *fractal)
 		fractal->x += fractal->width * 0.05;
 	else if (keycode == 65364)
 		fractal->y += fractal->height * 0.05;
-	draw_fractal(fractal, "mandelbrot");
+	draw_fractal(fractal, "julia");
 	return(0);
 }
 
@@ -46,23 +46,23 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 
 	if (button == 4)
 	{
-		fractal->x += 0.15 * fractal->width;
-		fractal->width -= 0.3 * fractal->width;
-		fractal->y += 0.15 * fractal->height;
-		fractal->height -= 0.3 * fractal->height;
-		if (fractal->max_iterations < 350)
-			fractal->max_iterations += 6;
-		draw_fractal(fractal, "mandelbrot");
+		fractal->x += 0.1 * fractal->width;
+		fractal->width -= 0.2 * fractal->width;
+		fractal->y += 0.1 * fractal->height;
+		fractal->height -= 0.2 * fractal->height;
+		if (fractal->max_iterations < MAX_ITERATIONS)
+			fractal->max_iterations += 1;
+		draw_fractal(fractal, "julia");
 	}
 	if (button == 5)
 	{
-		fractal->x -= 0.15 * fractal->width;
-		fractal->width += 0.3 * fractal->width;
-		fractal->y -= 0.15 * fractal->height;
-		fractal->height += 0.3 * fractal->height;
-		if (fractal->max_iterations > 80)
-			fractal->max_iterations -= 6;
-		draw_fractal(fractal, "mandelbrot");
+		fractal->x -= 0.1 * fractal->width;
+		fractal->width += 0.2 * fractal->width;
+		fractal->y -= 0.1 * fractal->height;
+		fractal->height += 0.2 * fractal->height;
+		if (fractal->max_iterations > INITIAL_ITERATIONS)
+			fractal->max_iterations -= 1;
+		draw_fractal(fractal, "julia");
 	}
 	return(0);
 }

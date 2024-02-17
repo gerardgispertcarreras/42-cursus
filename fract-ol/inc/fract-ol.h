@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:25:16 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 12:35:54 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:07:07 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # define Y_MIN -2.0
 # define Y_MAX 2.0
 # define THRESHOLD 4.0
-# define INITIAL_ITERATIONS 80
+# define INITIAL_ITERATIONS 200
+# define MAX_ITERATIONS 350
 
 # include <math.h>
 # include <stdio.h>
@@ -49,6 +50,7 @@ typedef struct	s_fractal {
 	int		max_iterations;
 	double *dx;
 	double *dy;
+	double	*color_palette;
 }				t_fractal;
 
 typedef struct s_cmplx {
@@ -83,6 +85,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int	compute_color(t_fractal *fractal, int iter);
 int	compute_iterations(t_fractal *fractal, double x, double y);
 void	compute_scales(t_fractal *fractal, double *dx, double *dy);
+void compute_color_palette(t_fractal *fractal);
+void julia(t_fractal *fractal, t_data *data);
+int compute_iterations_julia(t_fractal *fractal, double dx, double dy);
 
 // Fractal calculation
 void	draw_fractal(t_fractal *fractal, char *fractal_name);

@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:24:37 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/16 20:13:20 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:00:16 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	draw_fractal(t_fractal *fractal, char *fractal_name)
 {
 	if (!ft_strncmp(fractal_name, "mandelbrot", 11))
 		mandelbrot(fractal, fractal->data);
+	if (!ft_strncmp(fractal_name, "julia", 6))
+		julia(fractal, fractal->data);
 	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->data->img, 0, 0);
 }
 

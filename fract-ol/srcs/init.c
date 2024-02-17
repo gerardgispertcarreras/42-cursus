@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:21:01 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 12:36:24 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:20:56 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_parameters(int argc, char **argv)
 {
 	if (argc < 2)
 		usage();
-	if (ft_strncmp(argv[1], "mandelbrot", 11))
+	if (!(ft_strncmp(argv[1], "mandelbrot", 11) || ft_strncmp(argv[1], "julia", 6)))
 		usage();
 }
 
@@ -36,11 +36,7 @@ void	bind_events(t_fractal *fractal)
 void	print_error(char *err_msg, t_fractal *fractal)
 {
 	ft_putstr_fd(err_msg, 2);
-	free(fractal->mlx);
-	free(fractal->win);
-	free(fractal->data->img);
-	free(fractal->data->addr);
-	exit(0);
+	close_handler
 }
 
 void	fractal_init(t_fractal *fractal)
@@ -69,4 +65,5 @@ void	fractal_init(t_fractal *fractal)
 	fractal->max_iterations = INITIAL_ITERATIONS;
 	fractal->dx = malloc(X_SIZE * sizeof(double));
 	fractal->dy = malloc(Y_SIZE * sizeof(double));
+	compute_color_palette(fractal);
 }

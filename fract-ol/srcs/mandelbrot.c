@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:30:17 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 12:37:04 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:01:50 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void mandelbrot(t_fractal *fractal, t_data *data)
 
 
 	compute_scales(fractal, fractal->dx, fractal->dy);
-	i = -1;
-	while(++i < X_SIZE);
 	x = -1;
 	while (++x < X_SIZE)
 	{
