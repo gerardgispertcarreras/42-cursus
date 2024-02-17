@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 18:43:48 by ggispert          #+#    #+#              #
-#    Updated: 2023/08/30 16:42:55 by ggispert         ###   ########.fr        #
+#    Updated: 2024/02/02 16:29:20 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,10 @@ $(NAME): $(OBJS)
 	@ar -rcs $(NAME) $(OBJS)
 
 clean:
-	@echo "Removing libft sources"
-	@rm -f ./srcs/*.o
+	@removed_files=`rm -fv ./srcs/*.o 2>&1`; \
+    if [ -n "$$removed_files" ]; then \
+        echo "Libft files removed."; \
+    fi	
 
 fclean:
 	@$(MAKE) clean
