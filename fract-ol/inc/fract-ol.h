@@ -6,20 +6,20 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:25:16 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/15 16:11:55 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:35:54 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACT_OL_H
 # define FRACT_OL_H
-# define X_SIZE 1080
-# define Y_SIZE 1080
+# define X_SIZE 800
+# define Y_SIZE 800
 # define X_MIN -2.5
 # define X_MAX 1.5
 # define Y_MIN -2.0
 # define Y_MAX 2.0
 # define THRESHOLD 4.0
-# define MAX_ITERATIONS 250
+# define INITIAL_ITERATIONS 80
 
 # include <math.h>
 # include <stdio.h>
@@ -41,11 +41,14 @@ typedef struct	s_fractal {
 	void	*mlx;
 	void	*win;
 	t_data	*data;
-	double		x_min;
-	double		x_max;
-	double		y_min;
-	double		y_max;
-	int		*colors;
+	double	x;
+	double	y;
+	double	width;
+	double	height;
+	int		color_mode;
+	int		max_iterations;
+	double *dx;
+	double *dy;
 }				t_fractal;
 
 typedef struct s_cmplx {
@@ -77,14 +80,12 @@ int	key_handler(int keycode, t_fractal *fractal);
 int	mouse_handler(int button, int x, int y, t_fractal *fractal);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int	create_trgb(int t, int r, int g, int b);
-int	get_t(int trgb);
-int	get_r(int trgb);
-int	get_g(int trgb);
-int	get_b(int trgb);
+int	compute_color(t_fractal *fractal, int iter);
+int	compute_iterations(t_fractal *fractal, double x, double y);
+void	compute_scales(t_fractal *fractal, double *dx, double *dy);
 
 // Fractal calculation
-void	draw_fractal(t_fractal *fractal, t_data *data, char *fractal_name);
-void	mandelbrot(t_fractal *fractal, t_data *data, int max_iterations);
+void	draw_fractal(t_fractal *fractal, char *fractal_name);
+void	mandelbrot(t_fractal *fractal, t_data *data);
 
 #endif

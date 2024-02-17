@@ -6,33 +6,19 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:25:46 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/10 21:26:07 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:52:55 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-int	create_trgb(int t, int r, int g, int b)
+int compute_color(t_fractal *fractal, int iter)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-int	get_t(int trgb)
-{
-	return (trgb & (0xFF << 24));
-}
-
-int	get_r(int trgb)
-{
-	return (trgb & (0xFF << 16));
-}
-
-int	get_g(int trgb)
-{
-	return (trgb & (0xFF << 8));
-}
-
-int	get_b(int trgb)
-{
-	return (trgb & 0xFF);
+	if (iter > fractal->max_iterations)
+		return (0x00000000);
+	if (fractal->color_mode == 1)
+	{
+		return ((iter * 3) % 255 << 16 | (iter * 20) % 255 << 8 | (iter * 4) % 255);
+	}
+	return (0);
 }

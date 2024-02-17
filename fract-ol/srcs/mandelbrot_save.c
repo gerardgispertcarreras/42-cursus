@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:30:17 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 12:37:04 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:48:46 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,19 @@ void mandelbrot(t_fractal *fractal, t_data *data)
 	int y;
 	int	i;
 
-
-	compute_scales(fractal, fractal->dx, fractal->dy);
-	i = -1;
-	while(++i < X_SIZE);
 	x = -1;
 	while (++x < X_SIZE)
 	{
 		y = -1;
 		while (++y < Y_SIZE)
 		{
-			i = compute_iterations(fractal, fractal->dx[x], fractal->dy[y]);
+			i = compute_iterations(fractal, x, y);
 			my_mlx_pixel_put(data, x, y, compute_color(fractal, i));
 		}
 	}
 }
 
-int		compute_iterations(t_fractal *fractal, double dx, double dy)
+int		compute_iterations(t_fractal *fractal, int x, int y)
 {
 	int i;
 	t_cmplx	c;
@@ -44,8 +40,8 @@ int		compute_iterations(t_fractal *fractal, double dx, double dy)
 	i = 0;
 	z.x = 0.0;
 	z.y = 0.0;
-	c.x = fractal->x + dx;
-	c.y = fractal->y + dy;
+	c.x = fractal->x + x * (fractal->width / X_SIZE);
+	c.y = fractal->y + y * (fractal->height / Y_SIZE);
 	while (++i <= fractal->max_iterations && z.x * z.x + z.y * z.y <= THRESHOLD)
 	{
 		tmp = z.x * z.x - z.y * z.y + c.x;
@@ -53,19 +49,4 @@ int		compute_iterations(t_fractal *fractal, double dx, double dy)
 		z.x = tmp;
 	}
 	return (i);
-}
-
-void	compute_scales(t_fractal *fractal, double *dx, double *dy)
-{
-	int	i;
-	double	scale;
-
-	i = -1;
-	scale = (fractal->width / X_SIZE);
-	while (++i < X_SIZE)
-		dx[i] = i * scale;
-	i = -1;
-	scale = (fractal->height / Y_SIZE);
-	while (++i < X_SIZE)
-		dy[i] = i * scale;
 }
