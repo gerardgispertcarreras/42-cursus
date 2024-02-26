@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:34:28 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:49:53 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		main(int argc, char **argv);
 
 // Parsing and usage
 int		parser(int argc, char **argv, t_setup *setup);
-int		usage(void);
+int		usage(int error_code);
 int		get_parameter(int param_index, char *arg, t_setup *setup);
 int		get_int(char *arg, int *num);
 

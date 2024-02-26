@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:34:09 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:56 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:20:52 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_setup(t_setup *setup)
 int	main(int argc, char **argv)
 {
 	t_setup	setup;
+
 	if (parser(argc, argv, &setup))
 		return (EXIT_SUCCESS);
 	print_setup(&setup);
