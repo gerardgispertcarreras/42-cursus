@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:34:09 by ggispert          #+#    #+#             */
-/*   Updated: 2024/03/05 11:51:54 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:25:13 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	print_setup(t_setup *setup)
 	printf("n_times_eat = %d\n", setup->n_times_eat);
 }
 
-void	*philo_start(void *philo_arg)
+void	*philo_start(void *arg)
 {
-	t_philo *philo = (t_philo *)philo_arg;
+	t_thread_args *thread_args = (t_thread_args *)arg;
 
 	while (1)
 	{
-		_think(philo);
-		_eat(philo);
-		_sleep(philo);
+		_think(thread_args->philo);
+		_eat(thread_args->philo, thread_args->setup->t_eat);
+		_sleep(thread_args->philo, thread_args->setup->t_sleep);
 	}
 	return NULL;
 }
@@ -86,10 +86,12 @@ int	main(int argc, char **argv)
 
 void	init(t_setup *setup, pthread_t *thread_ids, pthread_mutex_t *forks, t_philo	*philos)
 {
+	t_thread_args *thread_args;
 	int		i;
 
 	i = -1;
 	pthread_mutex_init(&forks[0], NULL);
+	thread_args = malloc(setup->n_philo * sizeof(t_thread_args));
 	while (++i < setup->n_philo)
 	{
 		philos[i].id = i;
@@ -101,6 +103,8 @@ void	init(t_setup *setup, pthread_t *thread_ids, pthread_mutex_t *forks, t_philo
 			pthread_mutex_init(&forks[i + 1], NULL);
 			philos[i].right_fork = &forks[i + 1];
 		}
-		pthread_create(&thread_ids[i], NULL, philo_start, &philos[i]);
+		thread_args[i].setup = setup;
+		thread_args[i].philo = &philos[i];
+		pthread_create(&thread_ids[i], NULL, philo_start, &thread_args[i]);
 	}
 }

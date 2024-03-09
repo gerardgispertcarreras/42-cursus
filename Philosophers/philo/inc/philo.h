@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:34:28 by ggispert          #+#    #+#             */
-/*   Updated: 2024/03/05 11:54:05 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:52:52 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ typedef struct s_philo
 	pthread_mutex_t *right_fork;
 } t_philo;
 
+typedef struct s_thread_args {
+    t_setup *setup;
+		t_philo *philo;
+} t_thread_args;
+
 enum {
     TAKE_FORK = 1,
     LEAVE_FORK = 2,
@@ -58,9 +63,9 @@ void	init(t_setup *setup, pthread_t *thread_ids, pthread_mutex_t *forks, t_philo
 
 // Philosophers actions
 int	_think(t_philo *philo);
-int	_eat(t_philo *philo);
+int	_eat(t_philo *philo, int t_eat);
 int	_die();
-int	_sleep(t_philo *philo);
+int	_sleep(t_philo *philo, int t_sleep);
 
 // Utils
 void	print_message(int msg_type, int id);
