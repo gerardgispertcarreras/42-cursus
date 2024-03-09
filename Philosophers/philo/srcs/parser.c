@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:05:57 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/26 11:20:41 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:28:48 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,8 @@ int	get_int(char *arg, int *num)
 		++digits;
 		++arg;
 	}
-	if (digits >= 10)
-	{
-		if (result > 2147483647)
+	if (*arg != '\0' || (digits >= 10 && result > 2147483647))
 			return (EXIT_FAILURE);
-	}
 	*num = (int)result;
 	return (EXIT_SUCCESS);
 }

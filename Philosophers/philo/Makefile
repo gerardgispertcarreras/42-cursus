@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 10:15:54 by ggispert          #+#    #+#              #
-#    Updated: 2024/02/19 11:24:48 by ggispert         ###   ########.fr        #
+#    Updated: 2024/03/05 11:53:16 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJSDIR = objs/
 INCDIR = inc/
 AUXDIRS = string_utils/
 
-SRCS = main.c parser.c \
+SRCS = main.c parser.c philo_actions.c\
        string_utils/ft_putchar_fd.c string_utils/ft_putendl_fd.c \
        string_utils/ft_putstr_fd.c string_utils/ft_strlen.c 
 SRCS := $(addprefix $(SRCSDIR), $(SRCS))
