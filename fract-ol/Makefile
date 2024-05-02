@@ -6,27 +6,27 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 23:04:59 by ggispert          #+#    #+#              #
-#    Updated: 2024/02/17 15:00:29 by ggispert         ###   ########.fr        #
+#    Updated: 2024/02/17 17:52:59 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fract-ol
+NAME = fractol
 
 SRCS = srcs/main.c srcs/init.c srcs/events.c srcs/mandelbrot.c srcs/julia.c \
-			 srcs/colors.c
+       srcs/parse.c
 OBJS = $(SRCS:srcs/%.c=objs/%.o)
 
 SRCSDIR = ./srcs/
 OBJSDIR = ./objs/
 INCDIR = ./inc/
 
-HEADER = inc/fract-ol.h
+HEADER = inc/fractol.h
 
 LIBFT_PATH = ./inc/Libft/
 LIBFT_NAME = ft
 LIBFT = $(LIBFT_PATH)lib$(LIBFT_NAME).a
 
-MINILIBX_PATH = ./inc/minilibx-linux/
+MINILIBX_PATH = ./inc/minilibx/
 MINILIBX_NAME = mlx
 MINILIBX = $(MINILIBX_PATH)lib$(MINILIBX_NAME).a
 
@@ -35,7 +35,7 @@ CFLAGS = -Wall -Wextra -Werror -O3
 
 RM = rm -rf
 
-$(OBJSDIR)%.o: $(SRCSDIR)%.c $(HEADER)
+$(OBJSDIR)%.o: $(SRCSDIR)%.c $(HEADER) Makefile
 	@echo "Compiling $@"
 	@$(CC) $(CFLAGS) -I$(INCDIR) -I$(MINILIBX_PATH) -I$(LIBFT_PATH) $< -c -o $@
 
@@ -47,7 +47,7 @@ all:
 $(NAME): $(OBJSDIR) $(OBJS) $(LIBFT) $(MINILIBX)
 	@mkdir -p objs
 	@echo "Compiling $@"
-	@$(CC) $(CFLAGS) $(OBJS) -I$(INCDIR) -I$(MINILIBX_PATH) -I$(LIBFT_PATH) -o $@ -L$(LIBFT_PATH) -l$(LIBFT_NAME) -L$(MINILIBX_PATH) -l$(MINILIBX_NAME) -lXext -lX11 -lm
+	@$(CC) $(CFLAGS) $(OBJS) -I$(INCDIR) -I$(MINILIBX_PATH) -I$(LIBFT_PATH) -o $@ -L$(LIBFT_PATH) -l$(LIBFT_NAME) -L$(MINILIBX_PATH) -l$(MINILIBX_NAME) -framework OpenGL -framework AppKit
 
 $(OBJSDIR):
 	@mkdir -p $(OBJSDIR)

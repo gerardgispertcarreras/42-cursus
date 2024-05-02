@@ -6,18 +6,17 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:30:17 by ggispert          #+#    #+#             */
-/*   Updated: 2024/02/17 15:01:50 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:09:54 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
-void mandelbrot(t_fractal *fractal, t_data *data)
+void	mandelbrot(t_fractal *fractal, t_data *data)
 {
 	int	x;
-	int y;
+	int	y;
 	int	i;
-
 
 	compute_scales(fractal, fractal->dx, fractal->dy);
 	x = -1;
@@ -26,19 +25,23 @@ void mandelbrot(t_fractal *fractal, t_data *data)
 		y = -1;
 		while (++y < Y_SIZE)
 		{
-			i = compute_iterations(fractal, fractal->dx[x], fractal->dy[y]);
-			my_mlx_pixel_put(data, x, y, compute_color(fractal, i));
+			i = compute_iterations_mandelbrot(fractal, fractal->dx[x],
+				fractal->dy[y]);
+			if (i > fractal->max_iterations)
+				my_mlx_pixel_put(data, x, y, 0x00000000);
+			else
+				my_mlx_pixel_put(data, x, y, fractal->color_palette[i]);
 		}
 	}
 }
 
-int		compute_iterations(t_fractal *fractal, double dx, double dy)
+int	compute_iterations_mandelbrot(t_fractal *fractal, double dx, double dy)
 {
-	int i;
+	int		i;
 	t_cmplx	c;
 	t_cmplx	z;
 	double	tmp;
-	
+
 	i = 0;
 	z.x = 0.0;
 	z.y = 0.0;
@@ -55,7 +58,7 @@ int		compute_iterations(t_fractal *fractal, double dx, double dy)
 
 void	compute_scales(t_fractal *fractal, double *dx, double *dy)
 {
-	int	i;
+	int		i;
 	double	scale;
 
 	i = -1;
