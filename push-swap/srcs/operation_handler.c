@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 11:25:53 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/10 13:58:31 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:45:05 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	swap(t_stack *A, t_stack *B, char stack)
 		s = A;
 	else if (stack == 'b')
 		s = B;
-	else if (stack == 's')
+	else
 	{
 		swap(A, B, 'a');
 		swap(A, B, 'b');
@@ -77,7 +77,7 @@ void	push(t_stack *A, t_stack *B, char stack)
 		stack_origin = B;
 		stack_destination = A;
 	}
-	else if (stack == 'b')
+	else
 	{
 		stack_origin = A;
 		stack_destination = B;
@@ -103,7 +103,7 @@ void	rotate(t_stack *A, t_stack *B, char selected)
 		stack = A;
 	else if (selected == 'b')
 		stack = B;
-	else if (selected == 'r')
+	else
 	{
 		rotate(A, B, 'a');
 		rotate(A, B, 'b');
@@ -130,7 +130,7 @@ void	reverse_rotate(t_stack *A, t_stack *B, char selected)
 		stack = A;
 	else if (selected == 'b')
 		stack = B;
-	else if (selected == 'r')
+	else
 	{
 		reverse_rotate(A, B, 'a');
 		reverse_rotate(A, B, 'b');

@@ -1,7 +1,0 @@
-*.o
-*.a
-main.c
-*.out
-*.exe
-.DS_Store
-.vscode/

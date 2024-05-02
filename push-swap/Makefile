@@ -6,7 +6,7 @@
 #    By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 19:40:22 by ggispert          #+#    #+#              #
-#    Updated: 2023/12/28 23:52:28 by ggispert         ###   ########.fr        #
+#    Updated: 2024/05/02 13:44:56 by ggispert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,31 +23,38 @@ SRCS = srcs/main.c srcs/convert_arg_to_stack.c srcs/init_finish.c \
 OBJS = $(SRCS:%.c=%.o)
 HEADER = push_swap.h
 LIBFT_PATH = $(CURDIR)/Libft
-LIBFT = ft
-CFLAGS = -Wall -Werror -Wextra 
+LIBFT_NAME = ft
+LIBFT =  $(LIBFT_PATH)/lib$(LIBFT_NAME).a
+CFLAGS = -Wall -Werror -Wextra
+RM = rm -rf
 
 %.o : %.c $(HEADER)
 	@echo "Compiling $@"
 	@$(CC) $(CFLAGS) $< -c -o $@
 
 all:
-	@$(MAKE) -C Libft -s
+	@$(MAKE) $(LIBFT) -s
 	@$(MAKE) $(NAME) -s
 
-$(NAME): $(OBJS) $(LIBFT_PATH)/lib$(LIBFT).a
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_PATH) -s
+
+$(NAME): $(LIBFT) $(OBJS)
 	@echo "Compiling $@"
-	@$(CC) $(CFLAGS) $(OBJS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) -o $@ -L$(LIBFT_PATH) -l$(LIBFT_NAME)
 
 clean:
-	$(MAKE) -C Libft fclean -s
-	@find srcs -type f -name "*.o" -exec rm -f {} \;
-	@find srcs -type f -name "*.d" -exec rm -f {} \;
+	@$(MAKE) -C $(LIBFT_PATH) fclean -s
+	@$(RM) $(OBJS)
+	@echo "Removing push-swap object files"
 
 fclean:
-	$(MAKE) clean -s
-	rm -f $(NAME)
+	@$(MAKE) clean -s
+	@rm -f $(NAME)
+	@echo "Removing push-swap executable file"
 
 re:	
 	$(MAKE) fclean all -s
+	@echo "Recompiled the project"
 
 .PHONY: all clean fclean re
