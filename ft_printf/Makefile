@@ -27,9 +27,6 @@ $(NAME): $(OBJS)
 	@echo "Creating $@"
 	@ar -rcs $(NAME) $(OBJS)
 
-$(LIBFT_PATH)/lib$(LIBFT_NAME).a:
-	@$(MAKE) -C $(LIBFT_PATH)
-
 clean:
 	@echo "Removing libftprintf sources"
 	@rm -f ./srcs/*.o 
