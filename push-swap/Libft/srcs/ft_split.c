@@ -6,7 +6,7 @@
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:41:26 by ggispert          #+#    #+#             */
-/*   Updated: 2023/04/29 12:34:16 by ggispert         ###   ########.fr       */
+/*   Updated: 2024/02/02 16:44:43 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ size_t	get_word_count(char const *s, char c)
 
 long	get_word_length(char const *s, char c)
 {
-	long	i;
+	long	j;
 
-	i = 0;
-	while (s[i] != c && s[i] != '\0')
-		++i;
-	return (i);
+	j = 0;
+	while (s[j] != c && s[j] != '\0')
+		++j;
+	return (j);
 }
 
 char	**check_split(char a, long i, char **p)

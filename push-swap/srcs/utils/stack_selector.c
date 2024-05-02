@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   stack_selector.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggispert <ggispert@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 20:01:30 by ggispert          #+#    #+#             */
-/*   Updated: 2023/12/14 02:02:32 by ggispert         ###   ########.fr       */
+/*   Created: 2023/12/09 13:41:05 by ggispert          #+#    #+#             */
+/*   Updated: 2023/12/10 17:06:16 by ggispert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../push_swap.h"
 
-void	ft_bzero(void *s, size_t n)
+/*
+	This function selects the stack.
+	Params:
+		a: stack a.
+		b: stack b.
+		selected: selected stack.
+*/
+t_stack	*stack_selector(t_stack *a, t_stack *b, char selected)
 {
-	size_t	i;
-	char	*s2;
-
-	s2 = (char *)s;
-	i = 0;
-	while (i < n)
-	{
-		s2[i] = 0;
-		++i;
-	}
+	if (selected == 'a')
+		return (a);
+	return (b);
 }
